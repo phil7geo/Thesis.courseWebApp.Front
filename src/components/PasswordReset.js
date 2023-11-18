@@ -1,14 +1,56 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import '../styles/PasswordReset.css';
+
 import { Button } from 'primereact/button';
 
 const PasswordReset = () => {
     return (
         <div>
-            <h1>PasswordReset Page</h1>
-            <Link to="/login">Go to Login</Link>
-            <Button label="PasswordReset" className="p-button-primary" />
-            {/* Add other PrimeReact components and Tailwind CSS classes as needed */}
+            <div className="background-container"></div>
+            <div className="container form-container">
+                <h1>You can reset your password here</h1>
+
+                {/* Password Reset Form */}
+                <form>
+                    <div className="form-group">
+                        <label htmlFor="email" className="label">
+                            Email:
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            className="input-field"
+                            placeholder="Enter your email"
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="oldPassword" className="label">
+                            Old Password:
+                        </label>
+                        <input
+                            type="password"
+                            id="oldPassword"
+                            className="input-field"
+                            placeholder="Enter your old password"
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="newPassword" className="label">
+                            New Password:
+                        </label>
+                        <input
+                            type="password"
+                            id="newPassword"
+                            className="input-field"
+                            placeholder="Enter your new password"
+                        />
+                    </div>
+
+                    <Button label="Reset Password" className="button p-button-primary" />
+                </form>
+            </div>
         </div>
     );
 };

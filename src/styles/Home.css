@@ -14,25 +14,32 @@ body {
 
 /* Top Menu Bar Styles */
 nav {
-    background-color: #3498db;
-    padding: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    /*    background-color: #BE3144;*/
+    background-image: url(https://www.agiosdimitriosnews.gr/wp-content/uploads/2019/03/footer-bg.jpg);
+    padding: 0px 500px 0px 0px;
+    box-shadow: 10px 2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-    nav a {
-        color: white;
-        text-decoration: none;
-        padding: 8px 12px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
+.fixed-nav {
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+}
 
-        nav a:hover {
-            background-color: #2980b9;
-        }
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav a:hover {
+    background-color: #2980b9;
+}
 
 /* Logo Styles */
 .logo {
@@ -40,14 +47,52 @@ nav {
     text-decoration: none;
     font-size: 24px;
     font-weight: bold;
+    display: flex;
+    align-items: center;
 }
 
+/* Search Form Styles */
+.search-form {
+    display: flex;
+    align-items: center;
+}
+
+.ud-text-input {
+    /* Add any necessary styles for text input */
+}
+
+/*.search-button {
+    background-color: #BE3144;
+    color: white;*/
+/*    padding: 10px 20px;*/
+    /*border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}*/
+
 /* Login and Registration Button Styles */
+.nav-buttons {
+    display: flex;
+    gap: 20px;
+    color: #BE3144;
+}
+
 .login-button,
 .registration-button {
-    background-color: white;
-    color: black;
+    background-color: #BE3144;
+    color: white;
+    padding: 6px 12px; 
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
+
+    .login-button:hover,
+    .registration-button:hover {
+        background-color: #BE3144;
+    }
 
 /* Main Content Styles */
 .content {
@@ -65,9 +110,15 @@ nav {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Call to Action Styles */
+.cta-section {
+    margin-top: 8px;
+    text-align: center;
+}
+
 /* Button Styles */
 .button {
-    background-color: #3498db;
+    background-color: #BE3144;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -76,6 +127,172 @@ nav {
     transition: background-color 0.3s ease;
 }
 
-    .button:hover {
-        background-color: #2980b9;
+.button:hover {
+    background-color: #2980b9;
+}
+
+/* Footer Styles */
+body {
+    font-size: 14px;
+    background: #fff;
+    max-width: 1920px;
+    margin: 0 auto;
+    overflow-x: hidden;
+    font-family: poppins;
+}
+
+#footer {
+    background: #f7f7f7;
+    padding: 3rem;
+    background-image: url(https://www.agiosdimitriosnews.gr/wp-content/uploads/2019/03/footer-bg.jpg);
+}
+
+/*#footer2 {
+    background: #f7f7f7;
+    padding: 3rem;
+    padding-top: 7rem;
+}*/
+
+.logo-footer {
+     max-width: 300px; 
+}
+
+.social-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+}
+
+    .social-links h2 {
+        padding-bottom: 10px;
+        font-size: 30px;
+        font-weight: 800;
     }
+
+    .social-links img {
+        padding-bottom: 25px;
+    }
+
+.social-icons {
+    /* display: flex;
+    gap: 3rem; */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    color: #777777;
+}
+
+    .social-icons a {
+        /* font-size: 18px; */
+        /* background: #ffffff; */
+        /* box-shadow: rgb(0 0 0 / 8%) 0px 4px 12px;
+    padding: 0.4rem 1rem 0.4rem 1rem;
+    border-radius: 3px;
+  color: #82074a; */
+        color: #22092C;
+    }
+
+        .social-icons a:hover {
+            color: #22092C;
+        }
+
+        .social-icons a i {
+            box-shadow: rgb(0 0 0 / 8%) 0px 4px 12px;
+            padding: 0.4rem 1rem 0.4rem 1rem;
+            border-radius: 3px;
+            color: #22092C;
+            font-size: 16px;
+            margin-right: 12px;
+        }
+
+li {
+    list-style: none;
+}
+
+.useful-link h2 {
+    padding-bottom: 15px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #22092C;
+}
+
+.useful-link img {
+    padding-bottom: 15px;
+}
+
+.use-links {
+    line-height: 32px;
+    color: #22092C;
+}
+
+    .use-links li i {
+        font-size: 14px;
+        padding-right: 8px;
+        color: #22092C;
+    }
+
+    .use-links li a {
+        color: #303030;
+        font-size: 15px;
+        font-weight: 500;
+        color: #22092C;
+    }
+
+        .use-links li a:hover {
+            color: #000;
+        }
+
+.address h2 {
+    padding-bottom: 15px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.address img {
+    padding-bottom: 15px;
+}
+
+.address-links li a {
+    color: #22092C;
+    font-size: 15px;
+    font-weight: 500;
+    color: #22092C;
+}
+
+.address-links li i {
+    font-size: 16px;
+    padding-right: 8px;
+    color: #82074a;
+}
+
+    .address-links li i:nth-child(1) {
+        padding-top: 9px;
+    }
+
+.address-links .address1 {
+    font-weight: 500;
+    font-size: 15px;
+    display: flex;
+}
+
+.address-links {
+    line-height: 32px;
+    color: #22092C;
+}
+
+.copy-right-sec {
+    padding: 1.8rem;
+    background: #22092C;
+    color: #fff;
+    text-align: center;
+}
+
+    .copy-right-sec a {
+        color: #22092C;
+        font-weight: 500;
+    }
+
+a {
+    text-decoration: none;
+}
