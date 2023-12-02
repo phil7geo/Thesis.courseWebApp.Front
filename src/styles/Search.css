@@ -1,0 +1,73 @@
+/* Search.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/*.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+}
+*/
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    background: #b8c60600;
+    border-radius: 10px;
+    /* boxShadow: '0 0 200px rgba(0, 0, 0, 0.2)',*/
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    height: 100vh,
+}
+
+select,
+input,
+button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+div.checkbox-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label.checkbox-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+    label.checkbox-label input {
+        margin-right: 5px;
+    }
+
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+    button:hover {
+        background-color: #0056b3;
+    }

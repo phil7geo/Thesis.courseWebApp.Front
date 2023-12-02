@@ -10,6 +10,7 @@ import Contact from './components/Contact';
 import Search from './components/Search';
 import Results from './components/Results';
 import PasswordReset from './components/PasswordReset';
+import About from './components/About';
 
 const App = () => {
     return (
@@ -22,6 +23,7 @@ const App = () => {
                 <Route path="/registration" element={<Registration />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/about" element={<About />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/results" element={<Results />} />
                 <Route path="/password-reset" element={<PasswordReset />} />

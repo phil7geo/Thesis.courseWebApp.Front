@@ -49,7 +49,7 @@ const PasswordReset = () => {
                     </div>
 
                     <Button label="Reset Password" className="button p-button-primary" />
-                </form>
+                </form>s
             </div>
         </div>
     );

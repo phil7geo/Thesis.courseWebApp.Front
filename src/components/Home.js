@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 library.add(faFacebookF, faInstagram, faLinkedinIn);
 
 const basicLogoStyle = {
-    width: '50px',
+    width: '80px',
     height: 'auto',
     marginRight: '10px',
 };
@@ -43,12 +43,19 @@ const Home = () => {
                         tabIndex="-1"
                     >
                         <svg
-                            aria-label="Submit search"
-                            role="img"
-                            focusable="false"
-                            className="ud-icon ud-icon-medium ud-icon-color-neutral"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="white"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="feather feather-search"
                         >
-                            <use xlinkHref="#icon-search"></use>
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
                         </svg>
                     </button>
                 </form>
@@ -112,7 +119,7 @@ const Home = () => {
 
             {/* Footer*/}
             <footer id="footer" className="ud-footer">
-                <div class="container">
+                <div class="footer-container">
                     <div class="row">
                         <div class="col-md-3">
                             <Link to="/home" className="logo">

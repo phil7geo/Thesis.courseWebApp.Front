@@ -19,74 +19,46 @@ const Contact = () => {
     };
 
     return (
-        <div className="container d-flex justify-content-center align-items-center">
-            <img src="/contactIcon.svg" alt="hyper" />
-
-            {/* <!-- FORM --> */}
-            <link
-                rel="stylesheet"
-                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-            />
-            <form onSubmit={handleSubmit}>
-                <h1 className="title text-center mb-4">Talk to Us</h1>
-
-                {/* Name */}
-                <div className="form-group position-relative">
-                    <label htmlFor="formName" className="d-block">
-                        <i className="fas fa-user icon"></i>
-                    </label>
-                    <input
-                        type="text"
-                        id="formName"
-                        className="form-control form-control-lg thick"
-                        placeholder="Name"
-                    />
-                </div>
-
-                {/* E-mail */}
-                <div className="form-group position-relative">
-                    <label htmlFor="formEmail" className="d-block">
-                        <i className="fas fa-envelope icon"></i>
-                    </label>
-                    <input
-                        type="email"
-                        id="formEmail"
-                        className="form-control form-control-lg thick"
-                        placeholder="E-mail"
-                    />
-                </div>
-
-                {/* Message */}
-                <div className="form-group message">
-                    <textarea
-                        id="formMessage"
-                        className="form-control form-control-lg"
-                        rows="7"
-                        placeholder="Message"
-                    ></textarea>
-                </div>
-
-                {/* Submit btn */}
-                <div className="text-center">
-                    <button type="submit" className="btn btn-primary" tabIndex="-1">
-                        Send message
-                    </button>
-                </div>
-            </form>
-
-            {/* Custom pop-up message */}
-            {showPopup && (
-                <div className="overlay">
-                    <div className="custom-popup">
-                        <h2>Thank You!</h2>
-                        <p>We appreciate your message. We'll get back to you soon.</p>
-                        <button onClick={() => setShowPopup(false)}>Close</button>
+        <html>
+            <head>
+                <title>Contact form</title>
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
+                <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" />
+            </head>
+            <body>
+                <div class="main-block">
+                    <div class="left-part">
+                        <i class="fas fa-envelope"></i>
+                        <i class="fas fa-at"></i>
+                        <i class="fas fa-mail-bulk"></i>
                     </div>
+                    <form onSubmit={handleSubmit}>
+                        <h1>Contact Us</h1>
+                        <div class="info">
+                            <input class="fname" type="text" name="name" placeholder="Full name" />
+                            <input type="text" name="name" placeholder="Email" />
+                            <input type="text" name="name" placeholder="Phone number" />
+                        </div>
+                        <p>Message</p>
+                        <div>
+                            <textarea rows="4"></textarea>
+                        </div>
+                        <button type="submit" href="/">Submit</button>
+                    </form>
+                    {/* Custom pop-up message */}
+                    {showPopup && (
+                        <div className="overlay">
+                            <div className="custom-popup">
+                                <h2>Thank You!</h2>
+                                <p>We appreciate your message. We'll get back to you soon.</p>
+                                <button onClick={() => setShowPopup(false)}>Close</button>
+                            </div>
+                        </div>
+                    )};
                 </div>
-            )}
-
-        </div>
+            </body>
+        </html>
     );
-};
+}
 
 export default Contact;

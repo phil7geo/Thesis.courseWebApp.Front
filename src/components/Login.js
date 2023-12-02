@@ -135,7 +135,7 @@ const Login = () => {
     };
 
     const containerStyle = {
-        marginTop: '1%',
+        padding: '50px'
     };
 
     const leftColumnStyle = {
@@ -151,6 +151,7 @@ const Login = () => {
         height: '100%',
         objectFit: 'cover', // Ensures the image covers the entire container
     };
+
 
     return (
         <div className="container" style={containerStyle}>
@@ -168,7 +169,7 @@ const Login = () => {
                         <a className="font-medium no-underline ml-2 text-blue-500 cursor-pointer" href="/registration" style={RegistrationLinkStyle}>Create today!</a>
                         <div className="card-body">
                             <form onSubmit={handleSubmit}>
-                                {/* Google Sign-In Button */}
+{/*                                 Google Sign-In Button */}
                                 <GoogleLogin
                                     clientId="388649358661-crn3rvemlmcvjr0tdi29jrj89artvrkd.apps.googleusercontent.com"
                                     buttonText="Sign in with Google"
