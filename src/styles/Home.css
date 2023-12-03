@@ -15,7 +15,7 @@ body {
 nav {
     /*    background-color: #BE3144;*/
     background-image: url(https://www.agiosdimitriosnews.gr/wp-content/uploads/2019/03/footer-bg.jpg);
-    padding: 0px 500px 0px 0px;
+    padding: 0px 700px 0px 0px;
     box-shadow: 10px 2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
@@ -25,11 +25,12 @@ nav {
 .fixed-nav {
     position: fixed;
     width: 100%;
-    height: 100px
+    height: 100px;
+    margin: -200px;
 }
 
 nav a {
-    padding: 8px 12px;
+    padding: 0px 12px;
 }
 
 nav a:hover {
@@ -51,6 +52,7 @@ nav a:hover {
     display: flex;
     align-items: center;
     font-size: 15px;
+    width: 30%;
 }
 
 .ud-text-input {
@@ -64,6 +66,7 @@ nav a:hover {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    width: 30%;
 }
 
     /* Style for the search icon */

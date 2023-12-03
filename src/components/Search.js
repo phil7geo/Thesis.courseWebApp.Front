@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import '../styles/Search.css';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 function Search() {
     const [level, setLevel] = useState('');
@@ -7,13 +9,17 @@ function Search() {
     const [location, setLocation] = useState('');
     const [language, setLanguage] = useState([]);
     const [duration, setDuration] = useState('');
-    const [priceRange, setPriceRange] = useState('');
+    const [priceRange, setPriceRange] = React.useState(['min price', 'max price'])
+    const [onSale, setOnSale] = useState(false);
     const [certification, setCertification] = useState(false);
     const [rating, setRating] = useState('');
     const [selectedLocationType, setSelectedLocationType] = useState('town');
     const [selectedTown, setSelectedTown] = useState('');
     const [customLocation, setCustomLocation] = useState('');
+    const [selectedCourseFormat, setSelectedCourseFormat] = useState('asynchronous');
     const [selectedSubjects, setSelectedSubjects] = useState([]);
+    const [otherSubjectInput, setOtherSubjectInput] = useState('');
+
 
     // Sample course data (replace with actual course data)
     const courses = [
@@ -44,7 +50,12 @@ function Search() {
     const greekTowns = ['Athens', 'Thessaloniki', 'Patras', 'Heraklion', 'Larissa', 'Volos', 'Ioannina'];
 
     // List of possible subjects
-    const possibleSubjects = ['Programming', 'Data Science', 'Web Development', 'Mathematics', 'Physics', 'Chemistry'];
+    const possibleSubjects = ['Mathematics', 'Physics', 'Chemistry', 'History', 'Literature',
+        'Biology', 'Philosophy', 'Languages', 'Jurisprudence', 'Medicine',
+        'Business Administration', 'Artificial Intelligence (AI)', 'Finance',
+        'Marketing', 'Human Resources(HR)', 'Psychology', 'Sports', 'Health and Wellness',
+        'Political Science', 'Data Science', 'Web Development', 'Cybersecurity', 'Engineering',
+        'Information Technology (IT)', 'Other'];
 
     // Define the handleSubmit function to handle form submissions
     const handleSubmit = (e) => {
@@ -104,13 +115,39 @@ function Search() {
         setCustomLocation(e.target.value);
     };
 
+    const handleCourseFormatChange = (e) => {
+        setSelectedCourseFormat(e.target.value);
+
+        // Reset location-related states when changing course format
+        setLocation('');
+        setSelectedLocationType('town');
+        setSelectedTown('');
+        setCustomLocation('');
+    };
+
     const handleSubjectsChange = (e) => {
         const selectedOptions = Array.from(e.target.selectedOptions, (option) => option.value);
+
+        // Check if 'Other' is selected
+        if (selectedOptions.includes('Other')) {
+            // Clear otherSubjectInput when 'Other' is not selected
+            setOtherSubjectInput('');
+        }
+
         setSelectedSubjects(selectedOptions);
     };
 
+    const handleOtherSubjectChange = (e) => {
+        setOtherSubjectInput(e.target.value);
+    };
+
+
     const handleRatingChange = (e) => {
         setRating(parseFloat(e.target.value));
+    };
+
+    const handlePriceRangeChange = (values) => {
+        setPriceRange(values);
     };
 
     return (
@@ -140,47 +177,73 @@ function Search() {
                                 </option>
                             ))}
                         </select>
+
+                        {/* Conditionally render the text field for 'Other' option */}
+                        {selectedSubjects.includes('Other') && (
+                            <div>
+                                <label>Other Subjects:</label>
+                                <input
+                                    type="text"
+                                    placeholder="e.g. Gaming, Crypto"
+                                    value={otherSubjectInput}
+                                    onChange={handleOtherSubjectChange}
+                                />
+                            </div>
+                        )}
                     </div>
                     <div>
-                        <label>Select Location:</label>
+                        <label>Select Course Format:</label>
                         <select
-                            value={selectedLocationType}
-                            onChange={handleLocationTypeChange}
+                            value={selectedCourseFormat}
+                            onChange={handleCourseFormatChange}
                         >
-                            <option value="town">Main Town</option>
-                            <option value="custom">Other Town</option>
+                            <option value="asynchronous">Asynchronous (video-based)</option>
+                            <option value="synchronous">Synchronous (live with instructor)</option>
                         </select>
                     </div>
+                    {/* Conditionally render location fields based on course format */}
+                    {selectedCourseFormat === 'synchronous' && (
+                        <div>
+                            <div>
+                                <label>Select Location:</label>
+                                <select
+                                    value={selectedLocationType}
+                                    onChange={handleLocationTypeChange}
+                                >
+                                    <option value="town">Main Town</option>
+                                    <option value="custom">Other Town</option>
+                                </select>
+                            </div>
 
-                    {/* Greek Towns Dropdown or Custom Location Input */}
-                    {selectedLocationType === 'town' ? (
-                        <div>
-                            <label>Select Town:</label>
-                            <select
-                                value={selectedTown}
-                                onChange={handleTownChange}
-                            >
-                                <option value="">Select Town</option>
-                                {greekTowns.map((town, index) => (
-                                    <option key={index} value={town}>
-                                        {town}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                    ) : (
-                        <div>
-                            <label>Other Location:</label>
-                            <input
-                                type="text"
-                                placeholder="Enter Other Location e.g. Trikala"
-                                value={customLocation}
-                                onChange={handleCustomLocationChange}
-                            />
+                            {selectedLocationType === 'town' ? (
+                                <div>
+                                    <label>Select Town:</label>
+                                    <select
+                                        value={selectedTown}
+                                        onChange={handleTownChange}
+                                    >
+                                        <option value="">Select Town</option>
+                                        {greekTowns.map((town, index) => (
+                                            <option key={index} value={town}>
+                                                {town}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            ) : (
+                                <div>
+                                    <label>Other Location:</label>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter Other Location e.g. Trikala"
+                                        value={customLocation}
+                                        onChange={handleCustomLocationChange}
+                                    />
+                                </div>
+                            )}
                         </div>
                     )}
-
-                    <div>
+                    <div >
                         <label>Languages:</label>
                         <label>
                             <input
@@ -234,6 +297,19 @@ function Search() {
                             />
                             French
                         </label>
+                        <label>
+                            <input
+                                type="checkbox"
+                                value="Other"
+                                checked={language.includes('Other')}
+                                onChange={(e) =>
+                                    e.target.checked
+                                        ? setLanguage([...language, 'Other'])
+                                        : setLanguage(language.filter((lang) => lang !== 'French'))
+                                }
+                            />
+                            Other
+                        </label>
                     </div>
                     <select
                         value={duration}
@@ -252,23 +328,44 @@ function Search() {
                             onChange={(e) => setDuration(e.target.value)}
                         />
                     )}
-                    <label>Price Range:</label>
-                    <input
-                        type="range"
-                        min={10}
-                        max={1000}
-                        step={1}
-                        value={priceRange[1]}
-                        onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value, 10)])}
-                    />
-                    <span>{priceRange[0]}$</span>
-                    <span>{priceRange[1]}$</span>
+                    <div>
+                        <label>Price Range:</label>
+{/*                        <input
+                            type="range"
+                            min={10}
+                            max={1000}
+                            step={1}
+                            value={priceRange[1]}
+                            onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value, 10)])}
+                        />*/}
+                        <Slider
+                            style={{ backgroundColor:'grey' }}
+                            range
+                            min={10}
+                            max={1000}
+                            step={1}
+                            value={priceRange}
+                            onChange={handlePriceRangeChange}
+                        />
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <span>{priceRange[0]}$</span>
+                            <span>{priceRange[1]}$</span>
+                        </div>
+                    </div>
                     <label>
-                        Certification/Degree/Subject
+                        Gain Certification/Degree
                         <input
                             type="checkbox"
                             checked={certification}
                             onChange={() => setCertification(!certification)}
+                        />
+                    </label>
+                    <label>
+                        On Sale
+                        <input
+                            type="checkbox"
+                            checked={onSale}
+                            onChange={() => setOnSale(!onSale)}
                         />
                     </label>
                     <div>
@@ -276,11 +373,15 @@ function Search() {
                         <input
                             type="range"
                             min="0"
-                            max="5"
+                            max="5.0"
                             step="0.1"
                             value={rating}
                             onChange={handleRatingChange}
                         />
+                        <span style={{ textAlign: 'center' }}>
+                            {rating}
+                            <span style={{ marginLeft: '5px', color: 'goldenrod'}}>★</span>
+                        </span>
 {/*                        {rating.toFixed(1)}*/}
                     </div>
                     <button type="submit">Search</button>
