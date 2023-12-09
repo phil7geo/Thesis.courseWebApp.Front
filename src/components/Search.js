@@ -1,10 +1,13 @@
 ﻿import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Search.css';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import * as tf from '@tensorflow/tfjs';
 
 function Search() {
+    const navigate = useNavigate();
+
     const [level, setLevel] = useState('');
     const [subject, setSubjects] = useState([]);
     const [location, setLocation] = useState('');
@@ -21,6 +24,18 @@ function Search() {
     const [selectedSubjects, setSelectedSubjects] = useState([]);
     const [otherSubjectInput, setOtherSubjectInput] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
+    // Add a new state to store the loaded model
+    const [rnnModel, setRNNModel] = useState(null);
+    const [predictedCourses, setPredictedCourses] = useState([]);
+    const [errors, setErrors] = useState({
+        level: '',
+        subjects: '',
+        location: '',
+        language: '',
+        duration: '',
+        priceRange: '',
+    });
+
 
     // Sample course data (replace with actual course data)
     const courses = [
@@ -87,16 +102,63 @@ function Search() {
 
         // Perform filtering based on selected filters and model predictions
         const filteredCourses = courses.filter((course) => {
-            // Apply filter conditions based on user input and model predictions
+            // Apply filter conditions based on user input
             const passesUserFilters = applyUserFilters(course);
+
+            // Apply filter conditions based on model predictions
             const passesModelFilters = applyModelFilters(course);
 
-            return passesUserFilters && passesModelFilters;
+            // Combine user and model filter results
+            const passesAllFilters = passesUserFilters && passesModelFilters;
+
+            return passesAllFilters;
         });
+
+        // Check for empty fields
+        const newErrors = {
+            level: !level.trim() ? 'Define your level please' : '',
+            subjects: selectedSubjects.length === 0 ? 'Select at least one subject' : '',
+            duration: !duration.trim() ? 'The field cannot be empty' : '',
+        };
+
+        // Combine all error messages into an object
+        const allErrors = { ...errors, ...newErrors };
+
+        // Check if any field has an error
+        if (Object.values(allErrors).some((error) => error !== '')) {
+            setErrors(allErrors);
+            return;
+        }
+
+        // Clear errors when the user provides a value
+        setErrors({});
+
+        // Construct the URL with user input parameters
+        const queryParams = new URLSearchParams({
+            level,
+            subjects: selectedSubjects.join(','),
+            location,
+            language: language.join(','),
+            duration,
+            priceRange: priceRange.join(','),
+            certification: certification.toString(),
+            onSale: onSale.toString(),
+            rating,
+        });
+
+        // Clear any previous error messages
+        setErrors({});
+
+        // Redirect the user to the results page with the constructed URL
+        navigate(`/results?${queryParams.toString()}`);
 
         // Update your state or do something with filteredCourses
         console.log(filteredCourses);
+
+        // Make predictions and update the UI
+        makePredictions();
     };
+
 
 
     // Perform filtering based on various filters
@@ -151,6 +213,17 @@ function Search() {
         setCustomLocation('');
     };
 
+    const handleLevelChange = (e) => {
+        const value = e.target.value;
+        setLevel(value);
+
+        // Clear the error message for duration when user provides a valid value
+        setErrors((prevErrors) => ({
+            ...prevErrors,
+            level: !value.trim() ? 'Define your level please' : '',
+        }));
+    };
+
     const handleSubjectsChange = (e) => {
         const selectedOptions = Array.from(e.target.selectedOptions, (option) => option.value);
 
@@ -161,6 +234,23 @@ function Search() {
         }
 
         setSelectedSubjects(selectedOptions);
+
+        // Clear the error message for subjects when user provides a valid value
+        setErrors((prevErrors) => ({
+            ...prevErrors,
+            subjects: selectedOptions.length === 0 ? 'Select at least one subject' : '',
+        }));
+    };
+
+    const handleDurationChange = (e) => {
+        const value = e.target.value;
+        setDuration(value);
+
+        // Clear the error message for duration when user provides a valid value
+        setErrors((prevErrors) => ({
+            ...prevErrors,
+            duration: !value.trim() ? 'The field cannot be empty' : '',
+        }));
     };
 
     const handleOtherSubjectChange = (e) => {
@@ -185,6 +275,16 @@ function Search() {
         return model;
     }
 
+    const tokenToNumericValue = (token) => {
+        const tokenDictionary = {
+            'exampleToken1': 1,
+            'exampleToken2': 2,
+            // Add more tokens as needed
+        };
+
+        return tokenDictionary[token] || 0; // Return 0 if token not found in the dictionary
+    };
+
     const preprocessUserInput = (inputText) => {
         // Implement your preprocessing logic here
         // Example: Tokenization
@@ -196,40 +296,42 @@ function Search() {
         return inputTensor;
     };
 
-    const tokenToNumericValue = (token) => {
-        const tokenDictionary = {
-            'exampleToken1': 1,
-            'exampleToken2': 2,
-            // Add more tokens as needed
-        }
-
-    };
-
-        const makePredictions = async () => {
-            try {
-                const model = await loadModel();
-
-                /*            // Preprocess input data if needed
-                            const inputTensor = tf.tensor2d([[1, 2, 3]]);  // Replace with your input data*/
-
-                // Preprocess input data based on user input (use your own logic)
+    const makePredictions = async () => {
+        try {
+            if (rnnModel) {
+                // Preprocess input data based on user input
                 const inputTensor = preprocessUserInput(searchQuery);
-                const prediction = model.predict(inputTensor);
+                const prediction = rnnModel.predict(inputTensor);
+
+                // Process and display the prediction
+                const predictedData = Array.from(prediction.dataSync());
+                // Set the predicted courses in state
+                setPredictedCourses(predictedData);
 
                 // Process and display the prediction
                 console.log(prediction.dataSync());
-            } catch (error) {
-                console.error('Error making predictions:', error);
-                // Handle the error (e.g., fallback behavior)
+            } else {
+                console.warn('RNN model not yet loaded');
             }
-        };
+        } catch (error) {
+            console.error('Error making predictions:', error);
+            // Handle the error (e.g., fallback behavior)
+        }
+    };
 
+        // Load the RNN model when the component mounts
         useEffect(() => {
-            // Add any necessary conditions before making predictions
-            if (searchQuery.length > 2) {
-                makePredictions();
+            async function loadRNNModel() {
+                try {
+                    const loadedModel = await loadModel();
+                    setRNNModel(loadedModel);
+                } catch (error) {
+                    console.error('Error loading RNN model:', error);
+                }
             }
-        }, [searchQuery]);
+
+            loadRNNModel();
+        }, []);
 
         return (
             <div>
@@ -239,6 +341,7 @@ function Search() {
                         <select
                             value={level}
                             onChange={(e) => setLevel(e.target.value)}
+                            onChange={handleLevelChange}
                         >
                             <option value="">Select Level</option>
                             <option value="Beginner">Beginner</option>
@@ -246,6 +349,8 @@ function Search() {
                             <option value="Advanced">Advanced</option>
                         </select>
                         <div>
+                            {/* Display individual error messages for level */}
+                            {errors.level && <div style={{ color: 'red' }}>{errors.level}</div>}
                             <label>Select Subjects:</label>
                             <select
                                 multiple
@@ -272,6 +377,8 @@ function Search() {
                                 </div>
                             )}
                         </div>
+                        {/* Display individual error messages for subjects */}
+                        {errors.subjects && <div style={{ color: 'red' }}>{errors.subjects}</div>}
                         <div>
                             <label>Select Course Format:</label>
                             <select
@@ -386,7 +493,7 @@ function Search() {
                                     onChange={(e) =>
                                         e.target.checked
                                             ? setLanguage([...language, 'Other'])
-                                            : setLanguage(language.filter((lang) => lang !== 'French'))
+                                            : setLanguage(language.filter((lang) => lang !== 'Other'))
                                     }
                                 />
                                 Other
@@ -395,6 +502,7 @@ function Search() {
                         <select
                             value={duration}
                             onChange={(e) => setDuration(e.target.value)}
+                            onChange={handleDurationChange}
                         >
                             <option value="">Select Duration</option>
                             <option value="short-term">Short-term</option>
@@ -409,6 +517,8 @@ function Search() {
                                 onChange={(e) => setDuration(e.target.value)}
                             />
                         )}
+                        {/* Display individual error messages for duration */}
+                        {errors.duration && <div style={{ color: 'red' }}>{errors.duration}</div>}
                         <div>
                             <label>Price Range:</label>
                             <Slider
@@ -455,6 +565,14 @@ function Search() {
                                 {rating}
                                 <span style={{ marginLeft: '5px', color: 'goldenrod' }}>★</span>
                             </span>
+                        </div>
+                        <div>
+                            <h3>Predicted Courses:</h3>
+                            <ul>
+                                {predictedCourses.map((course, index) => (
+                                    <li key={index}>{`Course ${index + 1}: ${course}`}</li>
+                                ))}
+                            </ul>
                         </div>
                         <button type="submit">Search</button>
                     </form>
