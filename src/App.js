@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 //Components
 import Home from './components/Home';
@@ -13,6 +14,16 @@ import PasswordReset from './components/PasswordReset';
 import About from './components/About';
 
 const App = () => {
+    const [backendResponse, setBackendResponse] = useState('');
+
+    useEffect(() => {
+        // Fetch data from the backend
+        fetch('http://localhost:5000/api/sample')
+            .then(response => response.text())
+            .then(data => setBackendResponse(data))
+            .catch(error => console.error('Error fetching data:', error));
+    }, []);
+
     return (
         //Redirecting to all the pages with Routes in Basic App
         <Router>
@@ -29,6 +40,13 @@ const App = () => {
                 <Route path="/password-reset" element={<PasswordReset />} />
             </Routes>
         </Router>
+        //<div className="App">
+        //    <header className="App-header">
+        //        <p>
+        //            Frontend says: {backendResponse}
+        //        </p>
+        //    </header>
+        //</div>
     );
 };
 
