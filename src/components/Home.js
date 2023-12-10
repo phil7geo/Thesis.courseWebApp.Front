@@ -6,6 +6,9 @@ import '../styles/Home.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faFacebookF, faInstagram, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+
 
 library.add(faFacebookF, faInstagram, faLinkedinIn);
 
@@ -16,6 +19,7 @@ const basicLogoStyle = {
 };
 
 const Home = () => {
+
     return (
         <div className="container">
             {/* Top Menu Bar */}
@@ -67,6 +71,35 @@ const Home = () => {
 
             {/* Main Content */}
             <div className="content">
+                {/* Image Slider */}
+                <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
+                    <ol className="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div className="carousel-inner">
+                        <div className="carousel-item active">
+                            <img className="d-block w-100" src="math.svg" alt="First slide" />
+                        </div>
+                        <div className="carousel-item">
+                            <img className="d-block w-100" src="programming.svg" alt="Second slide" />
+                        </div>
+                        <div className="carousel-item">
+                            <img className="d-block w-100" src="psychology.svg" alt="Third slide" />
+                        </div>
+                    </div>
+                    <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span className="sr-only">Previous</span>
+                    </a>
+                    <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span className="sr-only">Next</span>
+                    </a>
+                </div>
+
+
                 {/* Sections */}
                 <div className="section">
                     <h2>Section 1</h2>
@@ -109,6 +142,25 @@ const Home = () => {
                         </video>
                     </div>
                 </div>
+            </div>
+
+            {/* Testimonials */}
+            <div className="section">
+                <h2>Student Testimonials</h2>
+                <div className="testimonial">
+                    <p>"I learned so much from the Programming course. The instructors are fantastic!"</p>
+                    <p className="author">- John Doe</p>
+                </div>
+                {/* Add more testimonials as needed */}
+            </div>
+
+            {/* Subscription Form */}
+            <div className="section">
+                <h2>Subscribe to Our Newsletter</h2>
+                <form className="subscription-form">
+                    <input type="email" placeholder="Enter your email" />
+                    <Button label="Subscribe" className="p-button-primary" />
+                </form>
             </div>
 
             {/* Call to Action */}
