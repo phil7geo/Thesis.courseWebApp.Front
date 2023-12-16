@@ -35,18 +35,31 @@ const Login = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (validation.usernameValid && validation.passwordValid) {
-            // Implement your login logic here
-            // For now, let's just log the form data
-            console.log('Login form submitted:', formData);
-            setLoginSuccess(true); // Set login success to true
-            // Redirect to the "/home" page
-           navigate('/home');
+            try {
+                const response = await fetch('http://localhost:5194/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                if (response.ok) {
+                    setLoginSuccess(true);
+                    navigate('/home');
+                } else {
+                    setLoginSuccess(false);
+                }
+            } catch (error) {
+                console.error('Login failed:', error);
+                setLoginSuccess(false);
+            }
         } else {
-            setLoginSuccess(false); // Set login success to false
+            setLoginSuccess(false);
         }
     };
 

@@ -77,19 +77,25 @@ const Registration = () => {
         e.preventDefault();
 
         if (validateForm()) {
-/*            try {
-                const response = await axios.post('/register', {
-                    username: formData.username,
-                    password: formData.password,
-                }); */
-                var response = 200;
-                if (response.status === 200) {
+            try {
+                const response = await fetch('http://localhost:5194/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                if (response.ok) {
                     setRegistrationSuccess(true);
+                    navigate('/home');
+                } else {
+                    setRegistrationSuccess(false);
                 }
-/*            } catch (error) {
+            } catch (error) {
                 console.error('Registration failed:', error);
                 setRegistrationSuccess(false);
-            }*/
+            }
         } else {
             setRegistrationSuccess(false);
         }

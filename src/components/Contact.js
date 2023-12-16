@@ -3,18 +3,44 @@ import '../styles/Contact.css';
 
 const Contact = () => {
     const [showPopup, setShowPopup] = useState(false);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [message, setMessage] = useState('');
 
-    const handleSubmit = (event) => {
-        event.preventDefault(); // Prevent the default form submission behavior
+    const handleSubmit = async () => {
+        try {
+            const response = await fetch('http://localhost:5194/api/contact/send-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    phoneNumber,
+                    message,
+                }),
+            });
 
-        // Add your logic here to handle the form submission
+            if (response.ok) {
+                // Message sent successfully, handle accordingly
+                console.log('Message sent successfully');
+            } else {
+                // Message sending failed, handle accordingly
+                console.error('Message sending failed');
+            }
+        } catch (error) {
+            console.error('Error sending message:', error);
+        }
 
         // Show the custom pop-up message
         setShowPopup(true);
 
-        // Y reset the form fields after submitting
+        // reset the form fields after submitting
         document.getElementById('formName').value = '';
         document.getElementById('formEmail').value = '';
+        document.getElementById('formMobileNumber').value = '';
         document.getElementById('formMessage').value = '';
     };
 
@@ -35,15 +61,38 @@ const Contact = () => {
                     <form onSubmit={handleSubmit}>
                         <h1>Contact Us</h1>
                         <div class="info">
-                            <input class="fname" type="text" name="name" placeholder="Full name" />
-                            <input type="text" name="name" placeholder="Email" />
-                            <input type="text" name="name" placeholder="Phone number" />
+                            <input
+                                className="fname"
+                                type="text"
+                                name="name"
+                                placeholder="Full name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                            <input
+                                type="text"
+                                name="email"
+                                placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                            <input
+                                type="text"
+                                name="phoneNumber"
+                                placeholder="Phone number"
+                                value={phoneNumber}
+                                onChange={(e) => setPhoneNumber(e.target.value)}
+                            />
                         </div>
                         <p>Message</p>
                         <div>
-                            <textarea rows="4"></textarea>
+                            <textarea
+                                rows="4"
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                            ></textarea>
                         </div>
-                        <button type="submit" href="/">Submit</button>
+                        <button type="submit">Submit</button>
                     </form>
                     {/* Custom pop-up message */}
                     {showPopup && (

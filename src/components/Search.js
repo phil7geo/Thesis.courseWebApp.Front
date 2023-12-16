@@ -97,7 +97,7 @@ function Search() {
 
 
     // Define the handleSubmit function to handle form submissions
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Perform filtering based on selected filters and model predictions
@@ -137,7 +137,8 @@ function Search() {
         const queryParams = new URLSearchParams({
             level,
             subjects: selectedSubjects.join(','),
-            location,
+            courseFormat: selectedCourseFormat.join(','),
+            location: selectedLocationType.join('.'),
             language: language.join(','),
             duration,
             priceRange: priceRange.join(','),
@@ -146,11 +147,33 @@ function Search() {
             rating,
         });
 
+        try {
+            // Send the search query and filters to the backend API
+            const response = await fetch(`http:///localhost:5194/api/search?${queryParams.toString()}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                // Handle the successful response from the backend, e.g., update the UI with results
+                const data = await response.json();
+                console.log('Search results:', data);
+            } else {
+                // Handle errors from the backend, e.g., display an error message
+                console.error('Error fetching search results from the backend');
+            }
+        } catch (error) {
+            console.error('Error during search query:', error);
+            // Handle the error (e.g., fallback behavior)
+        }
+
         // Clear any previous error messages
         setErrors({});
 
         // Redirect the user to the results page with the constructed URL
-        navigate(`/results?${queryParams.toString()}`);
+/*        navigate(`/results?${queryParams.toString()}`);*/
 
         // Update your state or do something with filteredCourses
         console.log(filteredCourses);
@@ -308,6 +331,9 @@ function Search() {
                 // Set the predicted courses in state
                 setPredictedCourses(predictedData);
 
+                // Send the search query and predicted courses to the backend
+                await sendSearchQueryToBackend(searchQuery, predictedData);
+
                 // Process and display the prediction
                 console.log(prediction.dataSync());
             } else {
@@ -332,6 +358,32 @@ function Search() {
 
             loadRNNModel();
         }, []);
+
+    // Add a new function to send search query and predicted courses to the backend
+    const sendSearchQueryToBackend = async (searchQuery, predictedCourses) => {
+        try {
+            const response = await fetch('http://localhost:5194/api/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    searchQuery,
+                    predictedCourses,
+                }),
+            });
+
+            if (response.ok) {
+                // Backend received the data successfully, handle accordingly
+                console.log('Search query and predicted courses sent to backend');
+            } else {
+                // Sending data to the backend failed, handle accordingly
+                console.error('Failed to send search query and predicted courses to backend');
+            }
+        } catch (error) {
+            console.error('Error sending data to backend:', error);
+        }
+    };
 
         return (
             <div>

@@ -1,9 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/PasswordReset.css';
-
 import { Button } from 'primereact/button';
 
 const PasswordReset = () => {
+
+    const [email, setEmail] = useState('');
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+
+    const handleResetPassword = async () => {
+        try {
+            const response = await fetch('http://localhost:5194/api/password-reset', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    oldPassword,
+                    newPassword,
+                }),
+            });
+
+            if (response.ok) {
+                // Password reset successful, handle accordingly
+                console.log('Password reset successful');
+            } else {
+                // Password reset failed, handle accordingly
+                console.error('Password reset failed');
+            }
+        } catch (error) {
+            console.error('Error resetting password:', error);
+        }
+    };
+
     return (
         <div>
             <div className="background-container"></div>
@@ -21,6 +51,8 @@ const PasswordReset = () => {
                             id="email"
                             className="input-field"
                             placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
 
@@ -33,7 +65,10 @@ const PasswordReset = () => {
                             id="oldPassword"
                             className="input-field"
                             placeholder="Enter your old password"
+                            value={oldPassword}
+                            onChange={(e) => setOldPassword(e.target.value)}
                         />
+
                     </div>
 
                     <div className="form-group">
@@ -45,10 +80,12 @@ const PasswordReset = () => {
                             id="newPassword"
                             className="input-field"
                             placeholder="Enter your new password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
                         />
                     </div>
 
-                    <Button label="Reset Password" className="button p-button-primary" />
+                    <Button label="Reset Password" className="button p-button-primary" onClick={handleResetPassword}/>
                 </form>s
             </div>
         </div>

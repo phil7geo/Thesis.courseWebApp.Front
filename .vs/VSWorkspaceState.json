@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\public"
+    "\\public",
+    "\\public\\model",
+    "\\src",
+    "\\src\\components",
+    "\\src\\styles"
   ],
   "PreviewInSolutionExplorer": false
 }
