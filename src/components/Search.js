@@ -137,8 +137,8 @@ function Search() {
         const queryParams = new URLSearchParams({
             level,
             subjects: selectedSubjects.join(','),
-            courseFormat: selectedCourseFormat.join(','),
-            location: selectedLocationType.join('.'),
+            courseFormat: Array.isArray(selectedCourseFormat) ? selectedCourseFormat.join(',') : selectedCourseFormat,
+            location: Array.isArray(selectedLocationType) ? selectedLocationType.join('.') : selectedLocationType,
             language: language.join(','),
             duration,
             priceRange: priceRange.join(','),
@@ -149,24 +149,24 @@ function Search() {
 
         try {
             // Send the search query and filters to the backend API
-            const response = await fetch(`http:///localhost:5194/api/search?${queryParams.toString()}`, {
+            const response = await fetch(`http://localhost:5194/api/search?${queryParams.toString()}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
 
-            if (response.ok) {
-                // Handle the successful response from the backend, e.g., update the UI with results
-                const data = await response.json();
-                console.log('Search results:', data);
-            } else {
-                // Handle errors from the backend, e.g., display an error message
-                console.error('Error fetching search results from the backend');
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
             }
+
+            const data = await response.json();
+            console.log('Search results:', data);
+
+            navigate(`/results`);
         } catch (error) {
             console.error('Error during search query:', error);
-            // Handle the error (e.g., fallback behavior)
+    // Handle the error (e.g., display an error message to the user)
         }
 
         // Clear any previous error messages

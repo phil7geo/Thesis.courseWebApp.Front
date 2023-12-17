@@ -18,7 +18,7 @@ const App = () => {
 
     useEffect(() => {
         // Fetch data from the backend
-        fetch('http://localhost:5000/api/sample')
+        fetch('http://localhost:5194/api/sample')
             .then(response => response.text())
             .then(data => setBackendResponse(data))
             .catch(error => console.error('Error fetching data:', error));
