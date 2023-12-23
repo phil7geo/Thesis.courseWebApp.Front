@@ -134,27 +134,29 @@ function Search() {
         setErrors({});
 
         // Construct the URL with user input parameters
-        const queryParams = new URLSearchParams({
+        const payload = {
             level,
-            subjects: selectedSubjects.join(','),
-            courseFormat: Array.isArray(selectedCourseFormat) ? selectedCourseFormat.join(',') : selectedCourseFormat,
-            location: Array.isArray(selectedLocationType) ? selectedLocationType.join('.') : selectedLocationType,
-            language: language.join(','),
+            selectedSubjects,
+            selectedCourseFormat,
+            selectedLocationType,
+            language,
             duration,
-            priceRange: priceRange.join(','),
-            certification: certification.toString(),
-            onSale: onSale.toString(),
-            rating,
-        });
+            priceRange,
+            certification,
+            onSale,
+            rating
+        };
 
         try {
             // Send the search query and filters to the backend API
-            const response = await fetch(`http://localhost:5194/api/search?${queryParams.toString()}`, {
-                method: 'GET',
+            const response = await fetch('http://localhost:5194/api/search/search', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify(payload),
             });
+
 
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
