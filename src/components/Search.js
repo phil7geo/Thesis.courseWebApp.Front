@@ -27,6 +27,7 @@ function Search() {
     // Add a new state to store the loaded model
     const [rnnModel, setRNNModel] = useState(null);
     const [predictedCourses, setPredictedCourses] = useState([]);
+    const [courses, setCourses] = useState([]);
     const [errors, setErrors] = useState({
         level: '',
         subjects: '',
@@ -35,33 +36,6 @@ function Search() {
         duration: '',
         priceRange: '',
     });
-
-
-    // Sample course data (replace with actual course data)
-    const courses = [
-        /* {
-             title: 'Course 1',
-             level: 'Beginner',
-             subject: ['Programming', 'Web Development'],
-             location: 'Online',
-             language: 'English',
-             duration: '3 months',
-             price: 20,
-             certification: true,
-             rating: 4.5,
-         },
-         {
-             title: 'Course 2',
-             level: 'Intermediate',
-             subject: ['Data Science', 'Machine Learning'],
-             location: 'New York',
-             language: 'English',
-             duration: '6 months',
-             price: 30,
-             certification: false,
-             rating: 3.8,
-         },*/
-    ];
 
     const greekTowns = ['Athens', 'Thessaloniki', 'Patras', 'Heraklion', 'Larissa', 'Volos', 'Ioannina'];
 
@@ -133,23 +107,22 @@ function Search() {
         // Clear errors when the user provides a value
         setErrors({});
 
-        // Construct the URL with user input parameters
         const payload = {
-            level,
-            selectedSubjects,
-            selectedCourseFormat,
-            selectedLocationType,
-            language,
-            duration,
-            priceRange,
-            certification,
-            onSale,
-            rating
+            level: level,
+            subjects: selectedSubjects,
+            courseFormat: selectedCourseFormat,
+            certification: certification,
+            location: selectedLocationType,
+            duration: duration,
+            language: language,
+            onSale: onSale,
+            priceRange: priceRange,
+            rating: rating
         };
 
         try {
             // Send the search query and filters to the backend API
-            const response = await fetch('http://localhost:5194/api/search/search', {
+            const response = await fetch('http://localhost:5194/api/search', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -165,7 +138,10 @@ function Search() {
             const data = await response.json();
             console.log('Search results:', data);
 
-            navigate(`/results`);
+            // Update the state or variable that holds the courses
+  /*          setCourses(data.Results); */
+
+/*            navigate(`/results`);*/
         } catch (error) {
             console.error('Error during search query:', error);
     // Handle the error (e.g., display an error message to the user)
@@ -639,6 +615,27 @@ function Search() {
                                 {/* Render other course details */}
                             </div>
                         ))}
+                    </div>
+                    <div>
+                        <div>
+                            <h3>Filtered Courses:</h3>
+                            {filteredCourses.map((course, index) => (
+                                <div key={index}>
+                                    <h3>{course.title}</h3>
+                                    {/* Render other course details */}
+                                </div>
+                            ))}
+                        </div>
+
+                        <div>
+                            <h3>Udemy Courses:</h3>
+                            {courses.map((course, index) => (
+                                <div key={index}>
+                                    <h3>{course.title}</h3>
+                                    {/* Render other course details */}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
