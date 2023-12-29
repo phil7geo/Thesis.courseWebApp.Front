@@ -38,7 +38,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (validation.usernameValid && validation.passwordValid) {
+        if (formData.username && formData.password) {
             try {
                 const response = await fetch('http://localhost:5194/api/login', {
                     method: 'POST',
@@ -77,10 +77,10 @@ const Login = () => {
         // Handle Google Sign-In response here
         console.log(response);
 
-        if (response.usernameValid && response.passwordValid) {
+        if (response && response.profileObj) {
             // Implement your login logic here
             // For now, let's just log the form data
-            console.log('Login form submitted:', formData);
+            console.log('Login form submitted:', response.profileObj);
             setLoginSuccess(true); // Set login success to true
             // Redirect to the "/home" page
             navigate('/home');
