@@ -3,39 +3,55 @@ import '../styles/Contact.css';
 
 const Contact = () => {
     const [showPopup, setShowPopup] = useState(false);
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [message, setMessage] = useState('');
 
-    const handleSubmit = async () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phoneNumber: '',
+        message: '',
+    });
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    }
+
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!formData.name || !formData.email || !formData.phoneNumber || !formData.message) {
+            console.error('Please fill out all fields');
+            return;
+        }
+
         try {
             const response = await fetch('http://localhost:5194/api/contact/send-message', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    name,
-                    email,
-                    phoneNumber,
-                    message,
-                }),
+                body: JSON.stringify(formData),
             });
 
             if (response.ok) {
                 // Message sent successfully, handle accordingly
                 console.log('Message sent successfully');
+
+                // Show the custom pop-up message
+                setShowPopup(true);
             } else {
                 // Message sending failed, handle accordingly
                 console.error('Message sending failed');
             }
         } catch (error) {
             console.error('Error sending message:', error);
+            setErrorMessage('');
         }
-
-        // Show the custom pop-up message
-        setShowPopup(true);
 
         // reset the form fields after submitting
         document.getElementById('formName').value = '';
@@ -66,33 +82,36 @@ const Contact = () => {
                                 type="text"
                                 name="name"
                                 placeholder="Full name"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                value={formData.name}
+                                onChange={handleInputChange}
                             />
                             <input
                                 type="text"
                                 name="email"
                                 placeholder="Email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={formData.email}
+                                onChange={handleInputChange}
                             />
                             <input
                                 type="text"
                                 name="phoneNumber"
                                 placeholder="Phone number"
-                                value={phoneNumber}
-                                onChange={(e) => setPhoneNumber(e.target.value)}
+                                value={formData.phoneNumber}
+                                onChange={handleInputChange}
                             />
                         </div>
                         <p>Message</p>
                         <div>
                             <textarea
                                 rows="4"
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
+                                name="message"
+                                value={formData.message}
+                                onChange={handleInputChange}
                             ></textarea>
                         </div>
                         <button type="submit">Submit</button>
+                        {/* Display error message in case of submitting error */}
+                    {errorMessage && <div className="error-message">{errorMessage}</div>}
                     </form>
                     {/* Custom pop-up message */}
                     {showPopup && (
