@@ -40,13 +40,6 @@ const App = () => {
                 <Route path="/password-reset" element={<PasswordReset />} />
             </Routes>
         </Router>
-        //<div className="App">
-        //    <header className="App-header">
-        //        <p>
-        //            Frontend says: {backendResponse}
-        //        </p>
-        //    </header>
-        //</div>
     );
 };
 

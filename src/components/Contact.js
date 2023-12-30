@@ -5,10 +5,10 @@ const Contact = () => {
     const [showPopup, setShowPopup] = useState(false);
 
     const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phoneNumber: '',
-        message: '',
+        FullName: '',
+        Email: '',
+        PhoneNumber: '',
+        Message: '',
     });
 
     const handleInputChange = (e) => {
@@ -24,7 +24,7 @@ const Contact = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!formData.name || !formData.email || !formData.phoneNumber || !formData.message) {
+        if (!formData.FullName || !formData.Email || !formData.PhoneNumber || !formData.Message) {
             console.error('Please fill out all fields');
             return;
         }
@@ -54,10 +54,10 @@ const Contact = () => {
         }
 
         // reset the form fields after submitting
-        document.getElementById('formName').value = '';
-        document.getElementById('formEmail').value = '';
-        document.getElementById('formMobileNumber').value = '';
-        document.getElementById('formMessage').value = '';
+        document.getElementById('FullName').value = '';
+        document.getElementById('Email').value = '';
+        document.getElementById('PhoneNumber').value = '';
+        document.getElementById('Message').value = '';
     };
 
     return (
@@ -80,21 +80,24 @@ const Contact = () => {
                             <input
                                 className="fname"
                                 type="text"
-                                name="name"
+                                name="FullName"
+                                id="FullName"
                                 placeholder="Full name"
                                 value={formData.name}
                                 onChange={handleInputChange}
                             />
                             <input
                                 type="text"
-                                name="email"
+                                id="Email"
+                                name="Email"
                                 placeholder="Email"
                                 value={formData.email}
                                 onChange={handleInputChange}
                             />
                             <input
                                 type="text"
-                                name="phoneNumber"
+                                id="PhoneNumber"
+                                name="PhoneNumber"
                                 placeholder="Phone number"
                                 value={formData.phoneNumber}
                                 onChange={handleInputChange}
@@ -104,7 +107,8 @@ const Contact = () => {
                         <div>
                             <textarea
                                 rows="4"
-                                name="message"
+                                id="Message"
+                                name="Message"
                                 value={formData.message}
                                 onChange={handleInputChange}
                             ></textarea>
