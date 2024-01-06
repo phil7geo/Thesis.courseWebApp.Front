@@ -86,11 +86,19 @@ const Registration = () => {
                     body: JSON.stringify(formData),
                 });
 
+                const responseData = await response.json();
+
                 if (response.ok) {
                     setRegistrationSuccess(true);
                     navigate('/home');
                 } else {
-                    setRegistrationSuccess(false);
+                    // Check the response data for specific error messages
+                    if (responseData && responseData.Message) {
+                        const fieldError = responseData.Message.toLowerCase(); // Assuming the error message contains the field name
+                        setErrors({ ...errors, [fieldError]: responseData.Message, registration: '' });
+                    } else {
+                        setErrors({ ...errors, registration: responseData.message || 'Registration failed' });
+                    }
                 }
             } catch (error) {
                 console.error('Registration failed:', error);
@@ -101,6 +109,8 @@ const Registration = () => {
         }
     };
 
+
+
     const validateForm = () => {
         const { username, email, password, confirmPassword } = formData;
         let isFormValid = true;
@@ -109,26 +119,30 @@ const Registration = () => {
         if (!/^(?=.*\d)[a-zA-Z0-9]{5,}$/.test(username)) {
             // Username should have at least 5 characters, including at least one digit
             isFormValid = false;
-            setErrors('username', 'Username is invalid');
+            /*            setErrors('username', 'Username is invalid');*/
+            setErrors({ ...errors, username: 'Username is invalid' });
         }
 
         // Email validation
         if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
             // Basic email format validation
             isFormValid = false;
-            setErrors('email', 'Email is invalid');
+/*            setErrors('email', 'Email is invalid');*/
+            setErrors({ ...errors, email: 'Email is invalid' });
         }
 
         // Password validation (you can customize this based on your requirements)
         if (password.length < 8) {
             isFormValid = false;
-            setErrors('password', 'Password must be at least 8 characters');
+/*            setErrors('password', 'Password must be at least 8 characters');*/
+            setErrors({ ...errors, password: 'Password must be at least 8 characters' });
         }
 
         // Confirm password validation
         if (password !== confirmPassword) {
             isFormValid = false;
-            setErrors('confirmPassword', 'Passwords do not match');
+/*            setErrors('confirmPassword', 'Passwords do not match');*/
+            setErrors({ ...errors, confirmPassword: 'Passwords do not match' });
         }
 
         return isFormValid;
@@ -250,7 +264,7 @@ const Registration = () => {
                         style={{ ...inputStyle, ...getInputStyle('username') }}
                     />
                 </div>
-                {errors.username && <div className="error-message">{errors.username}</div>}
+               {errors.username && <div className="error-message">{errors.username}</div>}
 
                 <div className="form-group" style={inputGroupStyle}>
                     <label htmlFor="email">Email:</label>
@@ -294,8 +308,9 @@ const Registration = () => {
                   <Button type="submit" className="btn btn-primary" style={RegistrationbuttonStyle}>
                     Create Account
                  </Button>
-            </form>
-            {registrationSuccess && <div className="success-message">Registration successful!</div>}
+                        </form>
+                        {errors.registration && <div className="error-message">{errors.registration}</div>}
+                        {registrationSuccess && <div className="success-message">Registration successful!</div>}
                     </div>
                 </div>
             </div>
