@@ -1,31 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Contact.css';
 
 const Contact = () => {
     const [showPopup, setShowPopup] = useState(false);
-
+    const [successMessage, setSuccessMessage] = useState('');
     const [formData, setFormData] = useState({
         FullName: '',
         Email: '',
         PhoneNumber: '',
         Message: '',
     });
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+
         setFormData({
             ...formData,
             [name]: value,
         });
     }
 
-    const [errorMessage, setErrorMessage] = useState('');
+    useEffect(() => {
+        let error = '';
+
+        if (formData.Email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.Email)) {
+                error = 'Invalid email format';
+            }
+        }
+
+        if (formData.PhoneNumber) {
+            const phoneRegex = /^69\d{8}$/;
+            if (!phoneRegex.test(formData.PhoneNumber)) {
+                error = 'Invalid mobile number format';
+            }
+        }
+
+        setErrorMessage(error);
+    }, [formData.Email, formData.PhoneNumber]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Check if any of the fields are empty
         if (!formData.FullName || !formData.Email || !formData.PhoneNumber || !formData.Message) {
-            console.error('Please fill out all fields');
+            setErrorMessage('All the fields are required in order to send the message');
             return;
         }
 
@@ -42,8 +63,22 @@ const Contact = () => {
                 // Message sent successfully, handle accordingly
                 console.log('Message sent successfully');
 
+                // Clear error message
+                setErrorMessage('');
+
                 // Show the custom pop-up message
                 setShowPopup(true);
+
+                // Set success message
+                setSuccessMessage('Message sent successfully');
+
+                // Reset the form fields after submitting
+                setFormData({
+                    FullName: '',
+                    Email: '',
+                    PhoneNumber: '',
+                    Message: '',
+                });
             } else {
                 // Message sending failed, handle accordingly
                 console.error('Message sending failed');
@@ -52,13 +87,17 @@ const Contact = () => {
             console.error('Error sending message:', error);
             setErrorMessage('');
         }
-
-        // reset the form fields after submitting
-        document.getElementById('FullName').value = '';
-        document.getElementById('Email').value = '';
-        document.getElementById('PhoneNumber').value = '';
-        document.getElementById('Message').value = '';
     };
+
+    useEffect(() => {
+        // Clear success message after 3 seconds (adjust as needed)
+        const timer = setTimeout(() => {
+            setSuccessMessage('');
+        }, 3000);
+
+        // Cleanup the timer on component unmount or when dependencies change
+        return () => clearTimeout(timer);
+    }, [successMessage]);
 
     return (
         <html>
@@ -83,7 +122,7 @@ const Contact = () => {
                                 name="FullName"
                                 id="FullName"
                                 placeholder="Full name"
-                                value={formData.name}
+                                value={formData.FullName}
                                 onChange={handleInputChange}
                             />
                             <input
@@ -91,42 +130,46 @@ const Contact = () => {
                                 id="Email"
                                 name="Email"
                                 placeholder="Email"
-                                value={formData.email}
+                                value={formData.Email}
                                 onChange={handleInputChange}
                             />
+                            {/* Display email validation error message */}
+                            {errorMessage && errorMessage.includes('Email') && <div className="error-message">{errorMessage}</div>}
                             <input
                                 type="text"
                                 id="PhoneNumber"
                                 name="PhoneNumber"
                                 placeholder="Phone number"
-                                value={formData.phoneNumber}
+                                value={formData.PhoneNumber}
                                 onChange={handleInputChange}
                             />
                         </div>
+                        {/* Display mobile number validation error message */}
+                        {errorMessage && errorMessage.includes('PhoneNumber') && <div className="error-message">{errorMessage}</div>}
                         <p>Message</p>
                         <div>
                             <textarea
                                 rows="4"
                                 id="Message"
                                 name="Message"
-                                value={formData.message}
+                                value={formData.Message}
                                 onChange={handleInputChange}
                             ></textarea>
                         </div>
-                        <button type="submit">Submit</button>
+                        <button type="submit" disabled={!!errorMessage}>Submit</button>
                         {/* Display error message in case of submitting error */}
-                    {errorMessage && <div className="error-message">{errorMessage}</div>}
-                    </form>
-                    {/* Custom pop-up message */}
-                    {showPopup && (
-                        <div className="overlay">
-                            <div className="custom-popup">
-                                <h2>Thank You!</h2>
-                                <p>We appreciate your message. We'll get back to you soon.</p>
-                                <button onClick={() => setShowPopup(false)}>Close</button>
+                        {errorMessage && <div className="error-message">{errorMessage}</div>}
+                        {/* Custom pop-up message */}
+                        {showPopup && (
+                            <div className="overlay">
+                                <div className="custom-popup">
+                                    <h2>Thank You!</h2>
+                                    <p>We appreciate your message. We'll get back to you soon.</p>
+                                    <button onClick={() => setShowPopup(false)}>Close</button>
+                                </div>
                             </div>
-                        </div>
-                    )};
+                        )};
+                    </form>
                 </div>
             </body>
         </html>

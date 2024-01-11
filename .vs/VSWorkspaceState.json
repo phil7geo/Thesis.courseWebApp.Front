@@ -1,10 +1,12 @@
 {
   "ExpandedNodes": [
     "",
+    "\\public",
+    "\\public\\model",
     "\\src",
     "\\src\\components",
     "\\src\\styles"
   ],
-  "SelectedNode": "\\trainModel.js",
+  "SelectedNode": "\\public\\model\\model.json",
   "PreviewInSolutionExplorer": false
 }
