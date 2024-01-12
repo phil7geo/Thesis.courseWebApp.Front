@@ -7,6 +7,6 @@
     "\\src\\components",
     "\\src\\styles"
   ],
-  "SelectedNode": "\\public\\model\\model.json",
+  "SelectedNode": "\\src\\components\\PasswordReset.js",
   "PreviewInSolutionExplorer": false
 }

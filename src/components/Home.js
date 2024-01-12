@@ -1,5 +1,4 @@
-﻿// Home.js
-import React from 'react';
+﻿import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'primereact/button';
 import '../styles/Home.css';
@@ -8,6 +7,7 @@ import { faFacebookF, faInstagram, faLinkedinIn } from '@fortawesome/free-brands
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import { useAuth } from '../AuthContext';
 
 
 library.add(faFacebookF, faInstagram, faLinkedinIn);
@@ -19,6 +19,7 @@ const basicLogoStyle = {
 };
 
 const Home = () => {
+    const { isLoggedIn } = useAuth();
 
     return (
         <div className="container">
@@ -28,45 +29,58 @@ const Home = () => {
                     <img src="/basic_logo.svg" alt="hyper" className="mb-3" style={basicLogoStyle} />
                     SkillsMentorHub
                 </Link>
-                <form action="/results/" className="search-form">
-                    <input
-                        type="hidden"
-                        name="src"
-                        value="ukw"
-                    />
-                    <input
-                        type="text"
-                        name="q"
-                        placeholder="Search for anything"
-                        autoComplete="off"
-                        className="ud-text-input ud-text-input-small ud-text-sm ud-search-form-autocomplete-input js-header-search-field"
-                    />
-                    <button
-                        type="submit"
-                        className="search-button"
-                        tabIndex="-1"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="white"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="feather feather-search"
+                {isLoggedIn ? (
+                    // Render this content when the user is logged in
+                    <>
+                        <div className="nav-buttons">
+                            <Link to="/dashboard" className="button">Dashboard</Link>
+                            <Link to="/logout" className="button">Logout</Link>
+                        </div>
+                    </>
+                ) : (
+                    // Render this content when the user is not logged in
+                    <>
+                    <form action="/results/" className="search-form">
+                        <input
+                            type="hidden"
+                            name="src"
+                            value="ukw"
+                        />
+                        <input
+                            type="text"
+                            name="q"
+                            placeholder="Search for anything"
+                            autoComplete="off"
+                            className="ud-text-input ud-text-input-small ud-text-sm ud-search-form-autocomplete-input js-header-search-field"
+                        />
+                        <button
+                            type="submit"
+                            className="search-button"
+                            tabIndex="-1"
                         >
-                            <circle cx="11" cy="11" r="8" />
-                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                        </svg>
-                    </button>
-                </form>
-                <div className="nav-buttons">
-                    <Link to="/login" className="button login-button">Login</Link>
-                    <Link to="/registration" className="button registration-button">Register</Link>
-                </div>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="white"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="feather feather-search"
+                            >
+                                <circle cx="11" cy="11" r="8" />
+                                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                            </svg>
+                        </button>
+                    </form>
+                    <div className="nav-buttons">
+                        <Link to="/login" className="button login-button">Login</Link>
+                        <Link to="/registration" className="button registration-button">Register</Link>
+                    </div>
+                    </>
+                )}
             </nav>
 
             {/* Main Content */}

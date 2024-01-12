@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { AuthProvider } from './AuthContext'; // Import AuthProvider
 
-//Components
+// Components
 import Home from './components/Home';
 import Login from './components/Login';
 import Registration from './components/Registration';
@@ -25,21 +26,23 @@ const App = () => {
     }, []);
 
     return (
-        //Redirecting to all the pages with Routes in Basic App
-        <Router>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/registration" element={<Registration />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/results" element={<Results />} />
-                <Route path="/password-reset" element={<PasswordReset />} />
-            </Routes>
-        </Router>
+        // Wrap the main application component with AuthProvider
+        <AuthProvider>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/registration" element={<Registration />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/search" element={<Search />} />
+                    <Route path="/results" element={<Results />} />
+                    <Route path="/password-reset" element={<PasswordReset />} />
+                </Routes>
+            </Router>
+        </AuthProvider>
     );
 };
 
