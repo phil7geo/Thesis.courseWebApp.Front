@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import { Link } from 'react-router-dom';
+import Logout from './Logout';
 import { Button } from 'primereact/button';
 import '../styles/Home.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -21,6 +22,7 @@ const basicLogoStyle = {
 const Home = () => {
     const { isLoggedIn } = useAuth();
 
+
     return (
         <div className="container">
             {/* Top Menu Bar */}
@@ -33,8 +35,8 @@ const Home = () => {
                     // Render this content when the user is logged in
                     <>
                         <div className="nav-buttons">
-                            <Link to="/dashboard" className="button">Dashboard</Link>
-                            <Link to="/logout" className="button">Logout</Link>
+                            <Link to="/profile" className="button">Profile</Link>
+                            <Logout />
                         </div>
                     </>
                 ) : (

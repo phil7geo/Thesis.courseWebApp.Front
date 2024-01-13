@@ -3,6 +3,7 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
+import { useAuth } from '../AuthContext';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -17,7 +18,8 @@ const Login = () => {
         passwordValid: false,
     });
 
-    const [loginSuccess, setLoginSuccess] = useState(null); // Initialize with null
+    const [loginSuccess, setLoginSuccess] = useState(null);
+    const { setLoggedIn } = useAuth();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -43,16 +45,26 @@ const Login = () => {
                 const response = await fetch('http://localhost:5194/api/login', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(formData),
                 });
 
                 if (response.ok) {
+                    const data = await response.json();
+                    const { token } = data;
+
+                    // Store the token securely (consider alternatives like HTTP-only cookies)
+                    localStorage.setItem('jwtToken', token);
+                    console.log('Stored token:', token);
+
+                    setLoggedIn(true);
                     setLoginSuccess(true);
                     navigate('/home');
                 } else {
+/*                    setLoggedIn(false);*/
                     setLoginSuccess(false);
+                    throw new Error(`Error logging in: ${response.statusText}`);
                 }
             } catch (error) {
                 console.error('Login failed:', error);

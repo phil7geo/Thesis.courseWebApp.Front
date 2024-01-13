@@ -13,9 +13,12 @@ import Search from './components/Search';
 import Results from './components/Results';
 import PasswordReset from './components/PasswordReset';
 import About from './components/About';
+import Logout from './components/Logout';
 
 const App = () => {
     const [backendResponse, setBackendResponse] = useState('');
+    // Assume storing of the JWT token in localStorage after a successful login
+    const token = localStorage.getItem('jwtToken');
 
     useEffect(() => {
         // Fetch data from the backend
@@ -27,7 +30,7 @@ const App = () => {
 
     return (
         // Wrap the main application component with AuthProvider
-        <AuthProvider>
+        <AuthProvider initialToken={token}>
             <Router>
                 <Routes>
                     <Route path="/" element={<Home />} />
@@ -40,6 +43,7 @@ const App = () => {
                     <Route path="/search" element={<Search />} />
                     <Route path="/results" element={<Results />} />
                     <Route path="/password-reset" element={<PasswordReset />} />
+                    <Route path="/logout" element={<Logout/>} />
                 </Routes>
             </Router>
         </AuthProvider>

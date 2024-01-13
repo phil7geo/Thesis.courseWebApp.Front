@@ -1,12 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\public",
-    "\\public\\model",
     "\\src",
     "\\src\\components",
     "\\src\\styles"
   ],
-  "SelectedNode": "\\src\\components\\PasswordReset.js",
   "PreviewInSolutionExplorer": false
 }
