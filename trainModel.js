@@ -3,36 +3,57 @@ const fs = require('fs');
 
 // Example data (replace with your dataset)
 const data = [
-    { input: 'user input 1', label: 'recommended course 1' },
-    { input: 'user input 2', label: 'recommended course 2' },
-    // Add more data entries
+    {
+        input: 'Beginner WebDevelopment Asynchronous English Long-Term OnSale 193-986 WithCertification Rating3.9',
+        label: 1, // Use numerical labels, e.g., 0 and 1
+    },
+    // Add more examples as needed
 ];
 
-const inputSize = 10;   // 10 input features
-const outputSize = 2;   // Binary classification: recommended or not
+const tokenToNumericValue = (token) => {
+    const tokenDictionary = {
+        'Beginner': 1,
+        'WebDevelopment': 2,
+        'Asynchronous': 3,
+        'Synchronous': 4,
+        'English': 5,
+        'Long-Term': 6,
+        'OnSale': 7,
+        '193-986': 8,
+        'WithCertification': 9,
+        'Rating3.9': 10,
+        // Add more tokens as needed
+    };
+    return tokenDictionary[token] || 0;
+};
 
+const preprocessData = (data) => {
+    return data.map(entry => ({
+        input: entry.input.split(' ').map(tokenToNumericValue),
+        label: entry.label,
+    }));
+};
 
-// Preprocess the data (tokenization, etc.)
-const processedData = data.map(entry => ({
-    input: tokenize(entry.input),
-    label: entry.label,
-}));
+const processedData = preprocessData(data);
+
+const inputSize = processedData[0].input.length;
+const outputSize = 2; // Modify based on your specific output size (number of classes)
 
 // Define the model
 const model = tf.sequential();
-model.add(tf.layers.dense({ inputShape: [inputSize], units: 64, activation: 'relu' }));
-model.add(tf.layers.dense({ units: outputSize, activation: 'softmax' }));
+model.add(tf.layers.simpleRNN({ units: 64, activation: 'relu', inputShape: [inputSize] }));
+model.add(tf.layers.dense({ units: outputSize, activation: 'sigmoid' })); // Use 'sigmoid' for binary classification
 
 // Compile the model
 model.compile({
     optimizer: 'adam',
-    loss: 'categoricalCrossentropy',
+    loss: 'binaryCrossentropy', // Use 'binaryCrossentropy' for binary classification
     metrics: ['accuracy'],
 });
 
 // Convert data to tensors
 const xs = tf.tensor2d(processedData.map(entry => entry.input));
-const ys = tf.oneHot(processedData.map(entry => entry.label), outputSize);
+const ys = tf.oneHot(processedData.map(entry => entry.label), outputSize); // Use numerical labels
 
 // Train the model
 model.fit(xs, ys, { epochs: 10 })
@@ -43,8 +64,3 @@ model.fit(xs, ys, { epochs: 10 })
         model.save('file://public/model/model.json');
     })
     .catch(error => console.error('Error during training:', error));
-
-// Tokenization function (replace with your preprocessing logic)
-function tokenize(input) {
-    return input.split(' ').map(word => parseFloat(word)); // Example: simple word-to-number mapping
-}

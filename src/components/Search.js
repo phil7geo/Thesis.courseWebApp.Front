@@ -36,6 +36,7 @@ function Search() {
         duration: '',
         priceRange: '',
     });
+    const maxPredictionsToShow = 5;
 
     const greekTowns = ['Athens', 'Thessaloniki', 'Patras', 'Heraklion', 'Larissa', 'Volos', 'Ioannina'];
 
@@ -69,8 +70,12 @@ function Search() {
         return Math.random() > 0.5; // Placeholder condition
     };
 
+    const handleExploreClick = (course) => {
+        // You can replace this with the actual logic to navigate to the results page
+        console.log(`Explore clicked for ${course}`);
+        navigate('/results'); // Example navigation, replace with your actual logic
+    };
 
-    // Define the handleSubmit function to handle form submissions
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -139,25 +144,19 @@ function Search() {
             console.log('Search results:', data);
 
             // Update the state or variable that holds the courses
-  /*          setCourses(data.Results); */
+            /* setCourses(data.Results); */
 
-/*            navigate(`/results`);*/
+            /* navigate(`/results`);*/
         } catch (error) {
             console.error('Error during search query:', error);
-    // Handle the error (e.g., display an error message to the user)
         }
 
         // Clear any previous error messages
         setErrors({});
 
         // Redirect the user to the results page with the constructed URL
-/*        navigate(`/results?${queryParams.toString()}`);*/
+        navigate(`/results?${payload.toString()}`);
 
-        // Update your state or do something with filteredCourses
-        console.log(filteredCourses);
-
-        // Make predictions and update the UI
-        makePredictions();
     };
 
 
@@ -223,6 +222,10 @@ function Search() {
             ...prevErrors,
             level: !value.trim() ? 'Define your level please' : '',
         }));
+
+        if (value.trim()) {
+            makePredictions();
+        }
     };
 
     const handleSubjectsChange = (e) => {
@@ -268,7 +271,11 @@ function Search() {
     };
 
     const handleInputChange = (event) => {
-        setSearchQuery(event.target.value);
+        const inputText = event.target.value;
+        setSearchQuery(inputText);
+
+        // Call makePredictions when the user types
+        makePredictions();
     };
 
     async function loadModel() {
@@ -297,30 +304,90 @@ function Search() {
         return inputTensor;
     };
 
+    const handlePredictedData = async (userInput) => {
+        try {
+            // Implement logic to send user input for predictions to the backend here
+            const response = await fetch('http://localhost:5194/api/predictions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userInput,
+                }),
+            });
+
+            if (response.ok) {
+                console.log('User input sent for predictions successfully');
+            } else {
+                console.error('Failed to send user input for predictions');
+            }
+        } catch (error) {
+            console.error('Error sending user input for predictions:', error);
+        }
+    };
+
     const makePredictions = async () => {
         try {
             if (rnnModel) {
                 // Preprocess input data based on user input
                 const inputTensor = preprocessUserInput(searchQuery);
-                const prediction = rnnModel.predict(inputTensor);
+
+                // Fetch predictions from the backend
+                const prediction = await fetchPredictions(inputTensor);
 
                 // Process and display the prediction
-                const predictedData = Array.from(prediction.dataSync());
-                // Set the predicted courses in state
-                setPredictedCourses(predictedData);
+                const predictedData = prediction.predictions || [];
+                setPredictedCourses(predictedData.$values);
 
-                // Send the search query and predicted courses to the backend
-                await sendSearchQueryToBackend(searchQuery, predictedData);
+                console.log('Prediction:', predictedData);
 
-                // Process and display the prediction
-                console.log(prediction.dataSync());
+                // Call handlePredictedData only once after setting the state
+                if (predictedData.length > 0) {
+                    await handlePredictedData(searchQuery);
+                }
             } else {
                 console.warn('RNN model not yet loaded');
             }
         } catch (error) {
             console.error('Error making predictions:', error);
-            // Handle the error (e.g., fallback behavior)
         }
+    };
+
+
+
+    const fetchPredictions = async (inputTensor) => {
+        try {
+            // Preprocess the input tensor to a format that the backend can handle (convert to string)
+            const userInput = preprocessInputTensor(inputTensor);
+
+            const response = await fetch('http://localhost:5194/api/predictions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    UserInput: userInput,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                return data;
+            } else {
+                console.error('Failed to fetch predictions from the backend');
+                return {};
+            }
+        } catch (error) {
+            console.error('Error fetching predictions:', error);
+            return {};
+        }
+    };
+
+    const preprocessInputTensor = (inputTensor) => {
+        // Convert the tensor to a 1D array and then join its elements into a string
+        const userInput = inputTensor.dataSync().join(',');
+        return userInput;
     };
 
         // Load the RNN model when the component mounts
@@ -337,32 +404,6 @@ function Search() {
             loadRNNModel();
         }, []);
 
-    // Add a new function to send search query and predicted courses to the backend
-    const sendSearchQueryToBackend = async (searchQuery, predictedCourses) => {
-        try {
-            const response = await fetch('http://localhost:5194/api/search', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    searchQuery,
-                    predictedCourses,
-                }),
-            });
-
-            if (response.ok) {
-                // Backend received the data successfully, handle accordingly
-                console.log('Search query and predicted courses sent to backend');
-            } else {
-                // Sending data to the backend failed, handle accordingly
-                console.error('Failed to send search query and predicted courses to backend');
-            }
-        } catch (error) {
-            console.error('Error sending data to backend:', error);
-        }
-    };
-
         return (
             <div>
                 <div>
@@ -370,8 +411,9 @@ function Search() {
                     <form onSubmit={handleSubmit}>
                         <select
                             value={level}
-                            onChange={(e) => setLevel(e.target.value)}
-                            onChange={handleLevelChange}
+                            onChange={(e) => {
+                                handleLevelChange(e);
+                            }}
                         >
                             <option value="">Select Level</option>
                             <option value="Beginner">Beginner</option>
@@ -596,47 +638,21 @@ function Search() {
                                 <span style={{ marginLeft: '5px', color: 'goldenrod' }}>★</span>
                             </span>
                         </div>
+
                         <div>
-                            <h3>Predicted Courses:</h3>
+                            <h3>Top Predicted Courses:</h3>
                             <ul>
-                                {predictedCourses.map((course, index) => (
-                                    <li key={index}>{`Course ${index + 1}: ${course}`}</li>
+                                {predictedCourses.slice(0, maxPredictionsToShow).map((course, index) => (
+                                    <li key={index}>
+                                        {course}
+                                        <button onClick={() => handleExploreClick(course)}>Explore</button>
+                                    </li>
                                 ))}
                             </ul>
                         </div>
+
                         <button type="submit">Search</button>
                     </form>
-                    {/* Display filtered courses here */}
-                    <div>
-                        {/* Display filtered courses here */}
-                        {filteredCourses.map((course, index) => (
-                            <div key={index}>
-                                <h3>{course.title}</h3>
-                                {/* Render other course details */}
-                            </div>
-                        ))}
-                    </div>
-                    <div>
-                        <div>
-                            <h3>Filtered Courses:</h3>
-                            {filteredCourses.map((course, index) => (
-                                <div key={index}>
-                                    <h3>{course.title}</h3>
-                                    {/* Render other course details */}
-                                </div>
-                            ))}
-                        </div>
-
-                        <div>
-                            <h3>Udemy Courses:</h3>
-                            {courses.map((course, index) => (
-                                <div key={index}>
-                                    <h3>{course.title}</h3>
-                                    {/* Render other course details */}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
                 </div>
             </div>
         );
