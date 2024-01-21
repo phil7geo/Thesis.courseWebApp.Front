@@ -113,16 +113,17 @@ function Search() {
         setErrors({});
 
         const payload = {
-            level: level,
-            subjects: selectedSubjects,
-            courseFormat: selectedCourseFormat,
-            certification: certification,
-            location: selectedLocationType,
-            duration: duration,
-            language: language,
-            onSale: onSale,
-            priceRange: priceRange,
-            rating: rating
+            Level: level,
+            Subject: selectedSubjects,
+            Duration: duration,
+            OnSale: onSale,
+            Rating: rating,
+            PriceRange: priceRange,
+            Certification: certification,
+            Language: language,
+            CourseFormat: selectedCourseFormat,
+            Location: selectedLocationType,
+            Town: selectedLocationType === 'town' ? selectedTown : customLocation,
         };
 
         try {
@@ -143,19 +144,14 @@ function Search() {
             const data = await response.json();
             console.log('Search results:', data);
 
-            // Update the state or variable that holds the courses
-            /* setCourses(data.Results); */
-
-            /* navigate(`/results`);*/
+            // Redirect the user to the results page with the constructed URL
+            navigate(`/results?${payload.toString()}`);
         } catch (error) {
             console.error('Error during search query:', error);
         }
 
         // Clear any previous error messages
         setErrors({});
-
-        // Redirect the user to the results page with the constructed URL
-        navigate(`/results?${payload.toString()}`);
 
     };
 
