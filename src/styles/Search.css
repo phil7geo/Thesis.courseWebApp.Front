@@ -6,14 +6,45 @@ body {
     padding: 0;
 }
 
+/* Add these styles to your existing CSS file or create a new one */
+
 /*.container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: #f4f4f4;
+    background-color: #f0f8ff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    transition: box-shadow 0.3s ease;
 }
-*/
+
+    .container:hover {
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    }
+
+.left-column {
+    flex: 1;
+    padding: 10px;
+}
+
+.right-column {
+    flex: 1;
+    padding: 10px;
+}*/
+
+/* Additional styling for the photo */
+/*.photo {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+}
+
+    .photo:hover {
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    }*/
+
 
 h2 {
     text-align: center;
@@ -30,6 +61,19 @@ form {
     align-items: center;
     justify-content: center;
     height: 100vh,
+}
+
+.search-container {
+    background-color: #f0f8ff; /* Light Blue color */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+.search-form {
+    display: grid;
+    gap: 15px;
 }
 
 select,
@@ -59,6 +103,22 @@ label.checkbox-label {
 input[type="radio"] {
     margin-right: 5px;
 }
+
+.clear-button,
+.search-button {
+    background-color: #3498db; /* Blue color */
+    color: #fff; /* White text */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .clear-button:hover,
+    .search-button:hover {
+        background-color: #217dbb; /* Darker shade of blue on hover */
+    }
 
 button {
     background-color: #007bff;
