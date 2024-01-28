@@ -1,15 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock, faMoneyCheckDollar, faStar, faVideo, faMapPin } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faMoneyCheckDollar, faStar, faVideo, faMapPin, faHeart as faHeartRegular } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartRegularEmpty } from '@fortawesome/free-regular-svg-icons';
 import axios from 'axios';
 
-const Results = ({ location: propLocation }) => {
+const Results = ({ location: propLocation, initialToken }) => {
     const realLocation = useLocation();
     const { state } = realLocation || {};
 
     const searchResults = state ? state.searchResults : [];
     console.log('Search Results:', searchResults);
+
+    const [favourites, setFavourites] = useState([]);
+    const [username, setUsername] = useState(null);
+
+    useEffect(() => {
+        const checkAuthStatus = async () => {
+            try {
+                const response = await fetch('http://localhost:5194/api/check-auth', {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${initialToken}`,
+                    },
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setUsername(data.username);
+                } else {
+                    console.error(`Error fetching authentication status. Status: ${response.status}, Message: ${response.statusText}`);
+                }
+            } catch (error) {
+                console.error(error.message);
+            }
+        };
+
+        checkAuthStatus();
+    }, [initialToken]);
+
+    useEffect(() => {
+        if (username) {
+            axios.post('http://localhost:5194/api/get-favourites', { username })
+                .then(response => {
+                    const favoritesArray = response.data.favorites.$values || [];
+                    console.log('Fetched Favorites:', favoritesArray);
+                    setFavourites(favoritesArray);
+                })
+                .catch(error => console.error('Error fetching favourites:', error));
+        }
+    }, [username]);
 
     const resultsStyle = {
         display: 'flex',
@@ -45,6 +85,41 @@ const Results = ({ location: propLocation }) => {
         borderRadius: '8px',
     };
 
+    const heartButtonStyle = {
+        cursor: 'pointer',
+        marginLeft: '10px',
+        color: 'red',
+        height: '30px'
+
+    };
+
+    const toggleFavourite = (courseTitle) => {
+        if (username) {
+            const isFavourite = favourites.includes(courseTitle);
+            const apiEndpoint = isFavourite ? 'remove-favourite' : 'add-favourite';
+
+            // Constructing the payload similar to the search API request
+            const payload = {
+                courseTitle,
+                username,
+            };
+
+            axios.post(`http://localhost:5194/api/${apiEndpoint}`, payload)
+                .then(response => {
+                    const updatedFavorites = response.data.favorites;
+
+                    if (updatedFavorites !== undefined) {
+                        setFavourites(updatedFavorites.$values || updatedFavorites);
+                    } else {
+                        console.error('Invalid response format for favorites. Response:', response.data);
+                    }
+                })
+                .catch(error => console.error(`Error ${isFavourite ? 'removing' : 'adding'} favourite:`, error));
+        } else {
+            console.error('Username not available. Cannot perform favourite operation.');
+        }
+    };
+
     const renderCourseSection = (courses) => {
         return (
             <>
@@ -52,7 +127,14 @@ const Results = ({ location: propLocation }) => {
                 {courses.map((course, index) => (
                     <div key={index} style={courseStyle}>
                         <h4>{course.title}</h4>
-                        {/* Add logic for related video here */}
+                        {/* Heart icon for adding/removing from favorites */}
+                        {favourites && (
+                            <FontAwesomeIcon
+                                icon={favourites && favourites.includes(course.title) ? faHeartRegular : faHeartRegularEmpty}
+                                style={heartButtonStyle}
+                                onClick={() => toggleFavourite(course.title)}
+                            />
+                        )}
                         <iframe
                             style={videoStyle}
                             src={`https://www.youtube.com/embed/${getVideoIdFromYouTube(course.title)}`}

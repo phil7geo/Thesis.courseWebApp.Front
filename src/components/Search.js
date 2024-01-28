@@ -121,7 +121,7 @@ function Search() {
         const newErrors = {
             level: !level.trim() ? 'Define your level please' : '',
             subjects: selectedSubjects.length === 0 ? 'Select at least one subject' : '',
-            duration: !duration.trim() ? 'The field cannot be empty' : '',
+            duration: typeof duration !== 'string' || !duration.trim() ? 'The field cannot be empty' : '',
         };
 
         // Combine all error messages into an object
@@ -287,10 +287,10 @@ function Search() {
     };
 
     const handleDurationChange = (e) => {
-        const value = e.target.value;
+        const value = e.target.value.toString();  // Ensure value is a string
         setDuration(value);
 
-        // Clear the error message for duration when user provides a valid value
+        // Clear the error message for duration when the user provides a valid value
         setErrors((prevErrors) => ({
             ...prevErrors,
             duration: !value.trim() ? 'The field cannot be empty' : '',
@@ -308,14 +308,6 @@ function Search() {
 
     const handlePriceRangeChange = (values) => {
         setPriceRange(values);
-    };
-
-    const handleInputChange = (event) => {
-        const inputText = event.target.value;
-        setSearchQuery(inputText);
-
-        // Call makePredictions when the user types
-        makePredictions();
     };
 
     async function loadModel() {
@@ -344,8 +336,11 @@ function Search() {
         return inputTensor;
     };
 
+
     const handlePredictedData = async (userInput) => {
         try {
+            const username = "exampleUsername";
+
             // Implement logic to send user input for predictions to the backend here
             const response = await fetch('http://localhost:5194/api/predictions', {
                 method: 'POST',
@@ -353,17 +348,18 @@ function Search() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    userInput,
+                    UserInput: userInput,
+                    Username: username,
                 }),
             });
 
             if (response.ok) {
-                console.log('User input sent for predictions successfully');
+                console.log('User input and username sent for predictions successfully');
             } else {
-                console.error('Failed to send user input for predictions');
+                console.error('Failed to send user input and username for predictions');
             }
         } catch (error) {
-            console.error('Error sending user input for predictions:', error);
+            console.error('Error sending user input and username for predictions:', error);
         }
     };
 
@@ -394,10 +390,9 @@ function Search() {
         }
     };
 
-
-
     const fetchPredictions = async (inputTensor) => {
         try {
+            const username = "exampleUsername";
             // Preprocess the input tensor to a format that the backend can handle (convert to string)
             const userInput = preprocessInputTensor(inputTensor);
 
@@ -408,6 +403,7 @@ function Search() {
                 },
                 body: JSON.stringify({
                     UserInput: userInput,
+                    Username: username,
                 }),
             });
 
@@ -681,14 +677,16 @@ function Search() {
 
                         <div>
                             <h3>Top Predicted Courses:</h3>
-                            <ul>
-                                {predictedCourses.slice(0, maxPredictionsToShow).map((course, index) => (
-                                    <li key={index}>
-                                        {course}
-                                        <button onClick={() => handleExploreClick(course)}>Explore</button>
-                                    </li>
-                                ))}
-                            </ul>
+                            {predictedCourses && predictedCourses.length > 0 && (
+                                <ul>
+                                    {predictedCourses.slice(0, maxPredictionsToShow).map((course, index) => (
+                                        <li key={index}>
+                                            {course}
+                                            <button onClick={() => handleExploreClick(course)}>Explore</button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </div>
 
                         {/* Clear Form Button */}
