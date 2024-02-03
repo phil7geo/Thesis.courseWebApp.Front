@@ -168,11 +168,15 @@ function Search() {
         };
 
         try {
+            // Get the JWT token from localStorage
+            const jwtToken = localStorage.getItem('jwtToken');
+
             // Send the search query and filters to the backend API
             const response = await fetch('http://localhost:5194/api/search', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${jwtToken}`
                 },
                 body: JSON.stringify(payload),
             });
