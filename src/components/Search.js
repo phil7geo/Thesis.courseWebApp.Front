@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Search.css';
 import Slider from 'rc-slider';
@@ -6,7 +6,7 @@ import 'rc-slider/assets/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import * as tf from '@tensorflow/tfjs';
-
+import { useAuth } from '../AuthContext';
 function Search() {
     const navigate = useNavigate();
 
@@ -38,6 +38,7 @@ function Search() {
         priceRange: '',
     });
     const maxPredictionsToShow = 5;
+    const { getAuthenticatedUser } = useAuth();
 
     const greekTowns = ['Athens', 'Thessaloniki', 'Patras', 'Heraklion', 'Larissa', 'Volos', 'Ioannina'];
 
@@ -73,7 +74,24 @@ function Search() {
 
     const handleExploreClick = (course) => {
         console.log(`Explore clicked for ${course}`);
-        navigate('/results'); // Example navigation, replace with your actual logic
+
+        // Construct dummy data similar to the searchResults format in order to retrieve the courseTitle info in results page
+        const searchResults = [{
+            title: course.trim(),
+            subject: "",
+            level: "",
+            duration: "",
+            language: "",
+            courseFormat: "",
+            certification: "",
+            onSale: "",
+            price: "",
+            rating: "",
+            location: "",
+            town: ""
+        }];
+
+        navigate('/results', { state: { searchResults: searchResults } });
     };
 
     const resetForm = () => {
@@ -336,19 +354,21 @@ function Search() {
         return inputTensor;
     };
 
-
     const handlePredictedData = async (userInput) => {
         try {
-            const username = "exampleUsername";
+            const authenticatedUser = await getAuthenticatedUser();
+            let username = authenticatedUser?.username || null; // Initialize as null
 
-            // Implement logic to send user input for predictions to the backend here
+            // Preprocess the input tensor to a format that the backend can handle (convert to string)
+            const preprocessedInputTensor = preprocessInputTensor(userInput);
+
             const response = await fetch('http://localhost:5194/api/predictions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    UserInput: userInput,
+                    UserInput: preprocessedInputTensor,
                     Username: username,
                 }),
             });
@@ -390,9 +410,17 @@ function Search() {
         }
     };
 
+
     const fetchPredictions = async (inputTensor) => {
         try {
-            const username = "exampleUsername";
+            const authenticatedUser = await getAuthenticatedUser();
+            let username = authenticatedUser?.username || null;
+
+            // user might not be authenticated
+            if (authenticatedUser && authenticatedUser.username) {
+                username = authenticatedUser.username;
+            }
+
             // Preprocess the input tensor to a format that the backend can handle (convert to string)
             const userInput = preprocessInputTensor(inputTensor);
 
@@ -676,13 +704,14 @@ function Search() {
                         </div>
 
                         <div>
-                            <h3>Top Predicted Courses:</h3>
+{/*                            Render Recommended Courses*/}
+                            <h3>Recommended Courses:</h3>
                             {predictedCourses && predictedCourses.length > 0 && (
                                 <ul>
                                     {predictedCourses.slice(0, maxPredictionsToShow).map((course, index) => (
                                         <li key={index}>
                                             {course}
-                                            <button onClick={() => handleExploreClick(course)}>Explore</button>
+                                             <button onClick={() => handleExploreClick(course)}>Explore</button>
                                         </li>
                                     ))}
                                 </ul>

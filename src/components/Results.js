@@ -164,7 +164,7 @@ const Results = ({ location: propLocation, initialToken }) => {
             // Extract video ID from the API response
             const videoId = response.data.items[0]?.id.videoId;
             console.log('YouTube Video ID:', videoId);
-            return videoId;
+            return videoId || 'NO_VIDEO_ID';
         } catch (error) {
             if (error.response && error.response.status === 403) {
                 // Handle 403 Forbidden error by returning a random VIDEO_ID

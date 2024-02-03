@@ -22,7 +22,7 @@ const Profile = () => {
                         </div>
                         <div className="media-body va-m">
                             <h2 className="media-heading">
-                                {isLoggedIn && userInfo ? userInfo : 'Guest'}
+                                {isLoggedIn && userInfo ? userInfo.username : 'Guest'}
                                 <small> - Profile</small>
                             </h2>
                             <p className="lead">Lorem ipsum dolor sit amet ctetur adicing elit, sed do eiusmod tempor incididunt</p>

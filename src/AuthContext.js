@@ -22,7 +22,7 @@ export const AuthProvider = ({ children, initialToken }) => {
                 if (response.ok) {
                     const data = await response.json();
                     setLoggedIn(data.isLoggedIn);
-                    setUserInfo(data.username);
+                    setUserInfo(data); // Set the entire user info object
                 } else {
                     console.error(`Error fetching authentication status. Status: ${response.status}, Message: ${response.statusText}`);
                     throw new Error('Authentication failed');
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children, initialToken }) => {
         return <div>Loading...</div>;
     }
 
-    const contextValue = { isLoggedIn, setLoggedIn, initialToken, isLoggedOut, setLoggedOut, userInfo }; 
+    const contextValue = { isLoggedIn, setLoggedIn, initialToken, isLoggedOut, setLoggedOut, userInfo };
 
     return (
         <AuthContext.Provider value={contextValue}>
@@ -62,5 +62,36 @@ export const AuthProvider = ({ children, initialToken }) => {
 };
 
 export const useAuth = () => {
-    return useContext(AuthContext);
+    const context = useContext(AuthContext);
+
+    // Function to retrieve the authenticated user
+    const getAuthenticatedUser = async () => {
+        // If userInfo is not available, fetch it from the backend
+        if (!context.userInfo) {
+            try {
+                const response = await fetch('http://localhost:5194/api/check-auth', {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${context.initialToken}`,
+                    },
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    context.setUserInfo(data);
+                    return data;
+                } else {
+                    console.error(`Error fetching user info. Status: ${response.status}, Message: ${response.statusText}`);
+                    throw new Error('Failed to fetch user info');
+                }
+            } catch (error) {
+                console.error(error.message);
+                throw error;
+            }
+        }
+
+        return context.userInfo;
+    };
+
+    return { ...context, getAuthenticatedUser };
 };
