@@ -723,3 +723,25 @@ body {
     border-color: #DDD;
     border-top: 1px solid #FFF;
 }
+
+/* Additional Content Styling */
+.additional-content {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #e2e2e2;
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Improved UI Styling */
+@media (min-width: 768px) {
+    .media-body {
+        width: 70%; /* Adjust as needed */
+    }
+
+    .additional-content {
+        margin-right: 30px;
+    }
+}
+
