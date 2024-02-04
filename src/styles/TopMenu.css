@@ -1,0 +1,51 @@
+/* TopMenu.css */
+.top-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-image: url(https://www.agiosdimitriosnews.gr/wp-content/uploads/2019/03/footer-bg.jpg);
+    background-size: cover;
+    color: #ffffff;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure it stays on top */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+    .logo-container img {
+        margin-right: 10px;
+    }
+
+.menu-items {
+    display: flex;
+    gap: 10px;
+}
+
+.menu-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff; /* Blue color for buttons */
+    transition: background-color 0.3s;
+}
+
+    .menu-button:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+.profile-button {
+    /* Additional styling if needed */
+}
+
+.logout-button {
+    /* Additional styling if needed */
+}

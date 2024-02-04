@@ -4,6 +4,7 @@ import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 import { useAuth } from '../AuthContext';
+import TopMenu from './TopMenu';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -181,6 +182,7 @@ const Login = () => {
     return (
         <div className="container" style={containerStyle}>
             <div className="row">
+                <TopMenu />
                 <div className="col-md-6" style={leftColumnStyle}>
                     <img src="/login_img.jpg" alt="Login" style={imageStyle} />
                 </div>
@@ -247,7 +249,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
     );
 };
 

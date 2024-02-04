@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import * as tf from '@tensorflow/tfjs';
 import { useAuth } from '../AuthContext';
+import TopMenu from './TopMenu';
 function Search() {
     const navigate = useNavigate();
 
@@ -474,6 +475,7 @@ function Search() {
 
         return (
             <div className="container">
+                <TopMenu />
                 <div className="left-column">
                     <h2>Search for Courses</h2>
                     <form onSubmit={handleSubmit} className="search-form">

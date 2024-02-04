@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/Profile.css';
 import { useAuth } from '../AuthContext';
+import TopMenu from './TopMenu';
 
 const Profile = () => {
     const { isLoggedIn, userInfo } = useAuth();
@@ -92,6 +93,7 @@ const Profile = () => {
                 rel="stylesheet"
             />
             <section id="content" className="container">
+                <TopMenu />
                 <div className="page-heading">
                     <div className="media clearfix">
                         <div className="media-left pr30">

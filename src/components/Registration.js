@@ -4,7 +4,7 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
-/*import axios from 'axios';*/
+import TopMenu from './TopMenu';
 
 const Registration = () => {
     const navigate = useNavigate();
@@ -198,18 +198,8 @@ const Registration = () => {
     const imageStyle = {
         width: '100%',
         height: '100%',
-        objectFit: 'cover', // Ensures the image covers the entire container
+        objectFit: 'cover', 
     };
-
-/*    const formStyle = {
-        width: '300px',
-        margin: '0 auto',
-        padding: '20px',
-        border: '1px solid #ccc',
-        borderRadius: '5px',
-        boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)',
-        backgroundColor: '#f9f9f9',
-    };*/
 
     const inputGroupStyle = {
         marginBottom: '10px',
@@ -234,6 +224,7 @@ const Registration = () => {
 
     return (
         <div className="container" style={containerStyle}>
+            <TopMenu />
             <div className="row">
                 <div className="col-md-6" style={leftColumnStyle}>
                     <img src="/login_img.jpg" alt="Login" style={imageStyle} />
@@ -249,7 +240,7 @@ const Registration = () => {
                         clientId="388649358661-crn3rvemlmcvjr0tdi29jrj89artvrkd.apps.googleusercontent.com"
                         buttonText="Sign up with Google"
                         onSuccess={responseGoogle}
-                        onFailure={responseGoogle} // Optional: Handle failure
+                        onFailure={responseGoogle}
                         cookiePolicy={'single_host_origin'}
                     />
                     <h6>or</h6>

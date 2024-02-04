@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faMoneyCheckDollar, faStar, faVideo, faMapPin, faHeart as faHeartRegular } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegularEmpty } from '@fortawesome/free-regular-svg-icons';
 import axios from 'axios';
+import TopMenu from './TopMenu';
 
 const Results = ({ location: propLocation, initialToken }) => {
     const realLocation = useLocation();
@@ -121,40 +122,40 @@ const Results = ({ location: propLocation, initialToken }) => {
     };
 
     const renderCourseSection = (courses) => {
-        return (
-            <>
-                <h3>Courses:</h3>
-                {courses.map((course, index) => (
-                    <div key={index} style={courseStyle}>
-                        <h4>{course.title}</h4>
-                        {/* Heart icon for adding/removing from favorites */}
-                        {favourites && (
-                            <FontAwesomeIcon
-                                icon={favourites && favourites.includes(course.title) ? faHeartRegular : faHeartRegularEmpty}
-                                style={heartButtonStyle}
-                                onClick={() => toggleFavourite(course.title)}
-                            />
-                        )}
-                        <iframe
-                            style={videoStyle}
-                            src={`https://www.youtube.com/embed/${getVideoIdFromYouTube(course.title)}`}
-                            title={course.title}
-                            frameBorder="0"
-                            allowFullScreen
-                        ></iframe>
-                        <p>{`${course.level} Level`}</p>
-                        <p>{`${course.duration}`} <FontAwesomeIcon icon={faClock} /></p>
-                        <p>{course.onSale ? 'On Sale 50%. Please hurry up' : 'Not on sale'}</p>
-                        <p>{`${course.price}`} <FontAwesomeIcon icon={faMoneyCheckDollar} /></p>
-                        <p>{`${course.rating}`} <FontAwesomeIcon icon={faStar} /></p>
-                        <p>{`In ${course.language}`}</p>
-                        <p>{`${course.courseFormat} method (via google meet)`} <FontAwesomeIcon icon={faVideo} /></p>
-                        <p>{`Location: ${course.location || 'Unknown'} (${course.town || 'Unknown'})`} <FontAwesomeIcon icon={faMapPin} /></p>
+        return (      
+                <>
+                    <h3>Courses:</h3>
+                    {courses.map((course, index) => (
+                        <div key={index} style={courseStyle}>
+                            <h4>{course.title}</h4>
+                            {/* Heart icon for adding/removing from favorites */}
+                            {favourites && (
+                                <FontAwesomeIcon
+                                    icon={favourites && favourites.includes(course.title) ? faHeartRegular : faHeartRegularEmpty}
+                                    style={heartButtonStyle}
+                                    onClick={() => toggleFavourite(course.title)}
+                                />
+                            )}
+                            <iframe
+                                style={videoStyle}
+                                src={`https://www.youtube.com/embed/${getVideoIdFromYouTube(course.title)}`}
+                                title={course.title}
+                                frameBorder="0"
+                                allowFullScreen
+                            ></iframe>
+                            <p>{`${course.level} Level`}</p>
+                            <p>{`${course.duration}`} <FontAwesomeIcon icon={faClock} /></p>
+                            <p>{course.onSale ? 'On Sale 50%. Please hurry up' : 'Not on sale'}</p>
+                            <p>{`${course.price}`} <FontAwesomeIcon icon={faMoneyCheckDollar} /></p>
+                            <p>{`${course.rating}`} <FontAwesomeIcon icon={faStar} /></p>
+                            <p>{`In ${course.language}`}</p>
+                            <p>{`${course.courseFormat} method (via google meet)`} <FontAwesomeIcon icon={faVideo} /></p>
+                            <p>{`Location: ${course.location || 'Unknown'} (${course.town || 'Unknown'})`} <FontAwesomeIcon icon={faMapPin} /></p>
 
-                        <p><a href={"/home"} rel="noopener noreferrer">Click here to purchase the course</a></p>
-                    </div>
-                ))}
-            </>
+                            <p><a href={"/home"} rel="noopener noreferrer">Click here to purchase the course</a></p>
+                        </div>
+                    ))}
+                </>
         );
     };
 
@@ -178,14 +179,19 @@ const Results = ({ location: propLocation, initialToken }) => {
     };
 
     return (
-        <div style={resultsStyle}>
-            <h2>Results (Courses)</h2>
-            <div style={listStyle}>
-                {searchResults && (
-                    <>
-                        {renderCourseSection(searchResults)}
-                    </>
-                )}
+        <div>
+            <div>
+                <TopMenu />
+            </div>
+            <div style={resultsStyle}>
+                <h2>Results (Courses)</h2>
+                <div style={listStyle}>
+                    {searchResults && (
+                        <>
+                            {renderCourseSection(searchResults)}
+                        </>
+                    )}
+                </div>
             </div>
         </div>
     );

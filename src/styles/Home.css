@@ -1,4 +1,43 @@
 /* Home.css */
+.home-container {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+.home-header {
+    position: fixed; /* Fixed position */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    width: 100%; /* Full width */
+    background-color: #fff; /* Background color */
+    z-index: 1000; /* Ensure it's above other content */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: add shadow for depth */
+}
+
+/* Add some top padding to the main content so it doesn't hide behind the fixed header */
+.home-main {
+    padding-top: 60px; /* Adjust this value based on the actual height of your header */
+}
+
+.course-highlights {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.additional-sections {
+    margin-top: 1em;
+}
+
+.home-footer {
+    background-color: #f7f7f7;
+    color: #666;
+    padding: 1em 0;
+    text-align: center;
+}
+
+/* Home.css */
 
 body {
     font-family: poppins;
