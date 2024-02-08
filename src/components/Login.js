@@ -150,8 +150,8 @@ const Login = () => {
 
     const basicLogoStyle = {
         textAlign: 'center',
-        margin: '-30px 175px',
-        width: '40%'
+        margin: '130px 300px',
+        width: '30%'
     };
 
     const LoginBtnStyle = {
@@ -180,75 +180,80 @@ const Login = () => {
 
 
     return (
-        <div className="container" style={containerStyle}>
-            <div className="row">
+        <div className="home-container">
+            {/* Header */}
+            <header className="home-header">
+                {/* Logo and navigation */}
+                {/* Top Menu Bar */}
                 <TopMenu />
-                <div className="col-md-6" style={leftColumnStyle}>
-                    <img src="/login_img.jpg" alt="Login" style={imageStyle} />
-                </div>
-                <div className="col-md-6" style={rightColumnStyle}>
-                    <img src="/basic_logo.svg" alt="hyper" className="mb-3" style={basicLogoStyle} />
-                    <div className="card">
-                        <div className="card-header bg-primary text-white">
-                            <h4>Login</h4>
-                        </div>
-                        <span className="text-600 font-medium line-height-3" style={RegistrationTitleStyle}>Don't have an account?</span>
-                        <a className="font-medium no-underline ml-2 text-blue-500 cursor-pointer" href="/registration" style={RegistrationLinkStyle}>Create today!</a>
-                        <div className="card-body">
-                            <form onSubmit={handleSubmit}>
-{/*                                 Google Sign-In Button */}
-                                <GoogleLogin
-                                    clientId="388649358661-crn3rvemlmcvjr0tdi29jrj89artvrkd.apps.googleusercontent.com"
-                                    buttonText="Sign in with Google"
-                                    onSuccess={responseGoogle}
-                                    onFailure={responseGoogle} // Optional: Handle failure
-                                    cookiePolicy={'single_host_origin'}
-                                />
-                                <h6>or</h6>
-                                <div className="mb-3">
-                                    <label htmlFor="username" className="form-label">Username</label>
-                                    <InputText
-                                        type="text"
-                                        className="form-control"
-                                        id="username"
-                                        name="username"
-                                        value={formData.username}
-                                        onChange={handleInputChange}
-                                        style={inputStyleUsername}
-                                        required
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="password" className="form-label">Password</label>
-                                    <InputText
-                                        type="password"
-                                        className="form-control"
-                                        id="password"
-                                        name="password"
-                                        value={formData.password}
-                                        onChange={handleInputChange}
-                                        style={inputStylePassword}
-                                        required />
-                                </div>
-                                <div className="mb-3 form-check">
-                                    <InputText type="checkbox" className="form-check-input" id="remember" />
-                                    <label className="form-check-label" htmlFor="remember">Remember me</label>
-                                </div>
-                                <Button type="submit" className="btn btn-primary" style={LoginBtnStyle}>Login</Button>
-                            </form>
-                            <div style={messageStyle}>
-                                {loginSuccess === true && 'Login successful. Redirecting...'}
-                                {loginSuccess === false && 'Login failed. Please check your inputs.'}
-                            </div>
-                            <div style={passwordResetStyle}>
-                                <a href="/password-reset" style={passwordResetLinkStyle}>
-                                    Forgot your password?
-                                </a>
-                            </div>
-                        </div>
+            </header>
+                <div className="row">
+                    <div className="col-md-6" style={leftColumnStyle}>
+                        <img src="/login_img.jpg" alt="Login" style={imageStyle} />
                     </div>
-                </div>
-            </div>
+                    <div className="col-md-6" style={rightColumnStyle}>
+                        <img src="/basic_logo.svg" alt="hyper" className="mb-3" style={basicLogoStyle} />
+                        <div className="card">
+                            <div className="card-header bg-primary text-white">
+                                <h4>Login</h4>
+                            </div>
+                            <span className="text-600 font-medium line-height-3" style={RegistrationTitleStyle}>Don't have an account?</span>
+                            <a className="font-medium no-underline ml-2 text-blue-500 cursor-pointer" href="/registration" style={RegistrationLinkStyle}>Create today!</a>
+                            <div className="card-body">
+                                <form onSubmit={handleSubmit}>
+    {/*                                 Google Sign-In Button */}
+                                    <GoogleLogin
+                                        clientId="388649358661-crn3rvemlmcvjr0tdi29jrj89artvrkd.apps.googleusercontent.com"
+                                        buttonText="Sign in with Google"
+                                        onSuccess={responseGoogle}
+                                        onFailure={responseGoogle} // Optional: Handle failure
+                                        cookiePolicy={'single_host_origin'}
+                                    />
+                                    <h6>or</h6>
+                                    <div className="mb-3">
+                                        <label htmlFor="username" className="form-label">Username</label>
+                                        <InputText
+                                            type="text"
+                                            className="form-control"
+                                            id="username"
+                                            name="username"
+                                            value={formData.username}
+                                            onChange={handleInputChange}
+                                            style={inputStyleUsername}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="password" className="form-label">Password</label>
+                                        <InputText
+                                            type="password"
+                                            className="form-control"
+                                            id="password"
+                                            name="password"
+                                            value={formData.password}
+                                            onChange={handleInputChange}
+                                            style={inputStylePassword}
+                                            required />
+                                    </div>
+                                    <div className="mb-3 form-check">
+                                        <InputText type="checkbox" className="form-check-input" id="remember" />
+                                        <label className="form-check-label" htmlFor="remember">Remember me</label>
+                                    </div>
+                                    <Button type="submit" className="btn btn-primary" style={LoginBtnStyle}>Login</Button>
+                                </form>
+                                <div style={messageStyle}>
+                                    {loginSuccess === true && 'Login successful. Redirecting...'}
+                                    {loginSuccess === false && 'Login failed. Please check your inputs.'}
+                                </div>
+                                <div style={passwordResetStyle}>
+                                    <a href="/password-reset" style={passwordResetLinkStyle}>
+                                        Forgot your password?
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                       </div>
+                    </div>
             </div>
     );
 };

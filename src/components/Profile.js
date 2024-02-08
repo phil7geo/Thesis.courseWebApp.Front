@@ -92,125 +92,132 @@ const Profile = () => {
                 href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
                 rel="stylesheet"
             />
-            <section id="content" className="container">
-                <TopMenu />
-                <div className="page-heading">
-                    <div className="media clearfix">
-                        <div className="media-left pr30">
-                            <a href="#">
-                                <img className="media-object mw150" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="..." />
-                            </a>
-                        </div>
-                        <div className="media-body va-m">
-                            <h2 className="media-heading">
-                                {isLoggedIn && userInfo ? userInfo.username : 'Guest'}
-                                <small> - Profile</small>
-                            </h2>
-                            <p className="lead">{generateLeadDescription(userInfo)}</p>
-                            <div className="media-links">
-                                <ul className="list-inline list-unstyled">
-                                    {mediaLinksData.map((linkItem) => (
-                                        <li key={linkItem.id}>
-                                            <a href={linkItem.link} target="_blank" rel="noopener noreferrer">
-                                                {linkItem.platform}
-                                            </a>
-                                        </li>
-                                    ))}
-                                </ul>
+            <div className="home-container">
+                {/* Header */}
+                <header className="home-header">
+                    {/* Logo and navigation */}
+                    {/* Top Menu Bar */}
+                    <TopMenu />
+                </header>
+                <section id="content" className="container">
+                    <div className="page-heading">
+                        <div className="media clearfix">
+                            <div className="media-left pr30">
+                                <a href="#">
+                                    <img className="media-object mw150" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="..." />
+                                </a>
                             </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="panel">
-                                <div className="panel-heading">
-                                    <span className="panel-icon">
-                                        <i className="fa fa-star"></i>
-                                    </span>
-                                    <span className="panel-title"> User Popularity</span>
+                            <div className="media-body va-m">
+                                <h2 className="media-heading">
+                                    {isLoggedIn && userInfo ? userInfo.username : 'Guest'}
+                                    <small> - Profile</small>
+                                </h2>
+                                <p className="lead">{generateLeadDescription(userInfo)}</p>
+                                <div className="media-links">
+                                    <ul className="list-inline list-unstyled">
+                                        {mediaLinksData.map((linkItem) => (
+                                            <li key={linkItem.id}>
+                                                <a href={linkItem.link} target="_blank" rel="noopener noreferrer">
+                                                    {linkItem.platform}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
-                                <div className="panel-body pn">
-                                    <table className="table mbn tc-icon-1 tc-med-2 tc-bold-last">
-                                        <thead>
-                                            <tr className="hidden">
-                                                <th className="mw30">#</th>
-                                                <th>First Name</th>
-                                                <th>Revenue</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {userPopularityData.map((user) => (
-                                                <tr key={user.id}>
-                                                    <td>{user.id}</td>
-                                                    <td>{user.firstName}</td>
-                                                    <td>{user.revenue}</td>
+                            </div>
+                            <div className="col-md-4">
+                                <div className="panel">
+                                    <div className="panel-heading">
+                                        <span className="panel-icon">
+                                            <i className="fa fa-star"></i>
+                                        </span>
+                                        <span className="panel-title"> User Popularity</span>
+                                    </div>
+                                    <div className="panel-body pn">
+                                        <table className="table mbn tc-icon-1 tc-med-2 tc-bold-last">
+                                            <thead>
+                                                <tr className="hidden">
+                                                    <th className="mw30">#</th>
+                                                    <th>First Name</th>
+                                                    <th>Revenue</th>
                                                 </tr>
+                                            </thead>
+                                            <tbody>
+                                                {userPopularityData.map((user) => (
+                                                    <tr key={user.id}>
+                                                        <td>{user.id}</td>
+                                                        <td>{user.firstName}</td>
+                                                        <td>{user.revenue}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                {/* My Skills Panel */}
+                                <div className="panel">
+                                    <div className="panel-heading">
+                                        <span className="panel-icon">
+                                            <i className="fa fa-trophy"></i>
+                                        </span>
+                                        <span className="panel-title"> My Skills</span>
+                                    </div>
+                                    <div className="panel-body pb5">
+                                        {skillsData.map((skill, index) => (
+                                            <span key={index} className="label label-success mr5">{skill}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                                {/* About Me Panel */}
+                                <div className="panel">
+                                    <div className="panel-heading">
+                                        <span className="panel-icon">
+                                            <i className="fa fa-pencil"></i>
+                                        </span>
+                                        <span className="panel-title">About Me</span>
+                                    </div>
+                                    <div className="panel-body pb5">
+                                        <h6>Email</h6>
+                                        {isLoggedIn && userInfo ? <p>{userInfo.email}</p> : null}
+
+                                        <h6>Favorite Courses</h6>
+                                        {isLoggedIn && userInfo ? <p>{userInfo.favouriteCourses}</p> : null}
+
+                                        <h6>Experience</h6>
+                                        <ul>
+                                            {experienceData.map((exp) => (
+                                                <li key={exp.id}>
+                                                    <strong>{exp.title}</strong> at {exp.company}, {exp.year}
+                                                </li>
                                             ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            {/* My Skills Panel */}
-                            <div className="panel">
-                                <div className="panel-heading">
-                                    <span className="panel-icon">
-                                        <i className="fa fa-trophy"></i>
-                                    </span>
-                                    <span className="panel-title"> My Skills</span>
-                                </div>
-                                <div className="panel-body pb5">
-                                    {skillsData.map((skill, index) => (
-                                        <span key={index} className="label label-success mr5">{skill}</span>
-                                    ))}
-                                </div>
-                            </div>
-                            {/* About Me Panel */}
-                            <div className="panel">
-                                <div className="panel-heading">
-                                    <span className="panel-icon">
-                                        <i className="fa fa-pencil"></i>
-                                    </span>
-                                    <span className="panel-title">About Me</span>
-                                </div>
-                                <div className="panel-body pb5">
-                                    <h6>Email</h6>
-                                    {isLoggedIn && userInfo ? <p>{userInfo.email}</p> : null}
+                                        </ul>
+                                        <hr className="short br-lighter" />
 
-                                    <h6>Favorite Courses</h6>
-                                    {isLoggedIn && userInfo ? <p>{userInfo.favouriteCourses}</p> : null}
+                                        <h6>Education</h6>
+                                        <ul>
+                                            {educationData.map((edu) => (
+                                                <li key={edu.id}>
+                                                    {edu.degree} at {edu.school}, {edu.year}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        <hr className="short br-lighter" />
 
-                                    <h6>Experience</h6>
-                                    <ul>
-                                        {experienceData.map((exp) => (
-                                            <li key={exp.id}>
-                                                <strong>{exp.title}</strong> at {exp.company}, {exp.year}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                    <hr className="short br-lighter" />
-
-                                    <h6>Education</h6>
-                                    <ul>
-                                        {educationData.map((edu) => (
-                                            <li key={edu.id}>
-                                                {edu.degree} at {edu.school}, {edu.year}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                    <hr className="short br-lighter" />
-
-                                    <h6>Accomplishments</h6>
-                                    <ul>
-                                        {accomplishmentsData.map((acc, index) => (
-                                            <li key={index}>{acc}</li>
-                                        ))}
-                                    </ul>
+                                        <h6>Accomplishments</h6>
+                                        <ul>
+                                            {accomplishmentsData.map((acc, index) => (
+                                                <li key={index}>{acc}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            {/* Additional Content Placement */}
-                            {additionalContent}
-                        </div> 
+                                {/* Additional Content Placement */}
+                                {additionalContent}
+                            </div> 
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </div>
     );
 };

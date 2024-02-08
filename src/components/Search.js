@@ -474,8 +474,13 @@ function Search() {
         }, []);
 
         return (
-            <div className="container">
-                <TopMenu />
+            <div className="home-container">
+                {/* Header */}
+                <header className="home-header">
+                    {/* Logo and navigation */}
+                    {/* Top Menu Bar */}
+                    <TopMenu />
+                </header>
                 <div className="left-column">
                     <h2>Search for Courses</h2>
                     <form onSubmit={handleSubmit} className="search-form">

@@ -191,8 +191,8 @@ const Registration = () => {
 
     const basicLogoStyle = {
         textAlign: 'center',
-        margin: '-30px 175px',
-        width: '40%'
+        margin: '130px 300px',
+        width: '25%'
     };
 
     const imageStyle = {
@@ -223,88 +223,93 @@ const Registration = () => {
     };
 
     return (
-        <div className="container" style={containerStyle}>
-            <TopMenu />
-            <div className="row">
-                <div className="col-md-6" style={leftColumnStyle}>
-                    <img src="/login_img.jpg" alt="Login" style={imageStyle} />
-                </div>
-                <div className="col-md-6" style={rightColumnStyle}>
-                    <img src="/basic_logo.svg" alt="hyper" className="mb-3" style={basicLogoStyle} />
-                    <div className="card">
-                        <div className="card-header bg-primary text-white">
-                            <h4>Registration</h4>
+        <div className="home-container">
+            {/* Header */}
+            <header className="home-header">
+                {/* Logo and navigation */}
+                {/* Top Menu Bar */}
+                <TopMenu />
+            </header>
+                <div className="row">
+                    <div className="col-md-6" style={leftColumnStyle}>
+                        <img src="/login_img.jpg" alt="Login" style={imageStyle} />
+                    </div>
+                    <div className="col-md-6" style={rightColumnStyle}>
+                        <img src="/basic_logo.svg" alt="hyper" className="mb-3" style={basicLogoStyle} />
+                        <div className="card">
+                            <div className="card-header bg-primary text-white">
+                                <h4>Registration</h4>
+                            </div>
+                    <form onSubmit={handleSubmit}>
+                        <GoogleLogin
+                            clientId="388649358661-crn3rvemlmcvjr0tdi29jrj89artvrkd.apps.googleusercontent.com"
+                            buttonText="Sign up with Google"
+                            onSuccess={responseGoogle}
+                            onFailure={responseGoogle}
+                            cookiePolicy={'single_host_origin'}
+                        />
+                        <h6>or</h6>
+                    <div className="form-group" style={inputGroupStyle}>
+                        <label htmlFor="username">Username:</label>
+                         <InputText
+                            type="text"
+                            id="username"
+                            name="username"
+                            value={formData.username}
+                            onChange={handleInputChange}
+                            style={{ ...inputStyle, ...getInputStyle('username') }}
+                        />
+                    </div>
+                   {errors.username && <div className="error-message">{errors.username}</div>}
+
+                    <div className="form-group" style={inputGroupStyle}>
+                        <label htmlFor="email">Email:</label>
+                        <InputText
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            style={{ ...inputStyle, ...getInputStyle('email') }}
+                        />
+                    </div>
+                    {errors.email && <div className="error-message">{errors.email}</div>}
+
+                    <div className="form-group" style={inputGroupStyle}>
+                        <label htmlFor="password">Password:</label>
+                        <InputText
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleInputChange}
+                            style={{ ...inputStyle, ...getInputStyle('password') }}
+                        />
+                    </div>
+                    {errors.password && <div className="error-message">{errors.password}</div>}
+
+                    <div className="form-group" style={inputGroupStyle}>
+                        <label htmlFor="confirmPassword">Confirm Password:</label>
+                        <InputText
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            value={formData.confirmPassword}
+                            onChange={handleInputChange}
+                            style={{ ...inputStyle, ...getInputStyle('confirmPassword') }}
+                        />
+                    </div>
+                    {errors.confirmPassword && <div className="error-message">{errors.confirmPassword}</div>}
+
+                      <Button type="submit" className="btn btn-primary" style={RegistrationbuttonStyle}>
+                        Create Account
+                     </Button>
+                            </form>
+                            {errors.registration && <div className="error-message">{errors.registration}</div>}
+                            {registrationSuccess && <div className="success-message">Registration successful!</div>}
                         </div>
-                <form onSubmit={handleSubmit}>
-                    <GoogleLogin
-                        clientId="388649358661-crn3rvemlmcvjr0tdi29jrj89artvrkd.apps.googleusercontent.com"
-                        buttonText="Sign up with Google"
-                        onSuccess={responseGoogle}
-                        onFailure={responseGoogle}
-                        cookiePolicy={'single_host_origin'}
-                    />
-                    <h6>or</h6>
-                <div className="form-group" style={inputGroupStyle}>
-                    <label htmlFor="username">Username:</label>
-                     <InputText
-                        type="text"
-                        id="username"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleInputChange}
-                        style={{ ...inputStyle, ...getInputStyle('username') }}
-                    />
-                </div>
-               {errors.username && <div className="error-message">{errors.username}</div>}
-
-                <div className="form-group" style={inputGroupStyle}>
-                    <label htmlFor="email">Email:</label>
-                    <InputText
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        style={{ ...inputStyle, ...getInputStyle('email') }}
-                    />
-                </div>
-                {errors.email && <div className="error-message">{errors.email}</div>}
-
-                <div className="form-group" style={inputGroupStyle}>
-                    <label htmlFor="password">Password:</label>
-                    <InputText
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleInputChange}
-                        style={{ ...inputStyle, ...getInputStyle('password') }}
-                    />
-                </div>
-                {errors.password && <div className="error-message">{errors.password}</div>}
-
-                <div className="form-group" style={inputGroupStyle}>
-                    <label htmlFor="confirmPassword">Confirm Password:</label>
-                    <InputText
-                        type="password"
-                        id="confirmPassword"
-                        name="confirmPassword"
-                        value={formData.confirmPassword}
-                        onChange={handleInputChange}
-                        style={{ ...inputStyle, ...getInputStyle('confirmPassword') }}
-                    />
-                </div>
-                {errors.confirmPassword && <div className="error-message">{errors.confirmPassword}</div>}
-
-                  <Button type="submit" className="btn btn-primary" style={RegistrationbuttonStyle}>
-                    Create Account
-                 </Button>
-                        </form>
-                        {errors.registration && <div className="error-message">{errors.registration}</div>}
-                        {registrationSuccess && <div className="success-message">Registration successful!</div>}
                     </div>
                 </div>
-            </div>
         </div>
     );
 }

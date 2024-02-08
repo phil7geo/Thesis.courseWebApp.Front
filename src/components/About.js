@@ -20,8 +20,13 @@ const mapStyle = {
 
 function About() {
     return (
-        <div class="container">
-            <TopMenu />
+        <div className="home-container">
+            {/* Header */}
+            <header className="home-header">
+                {/* Logo and navigation */}
+                {/* Top Menu Bar */}
+                <TopMenu />
+            </header>
             <div className="about-page" style={{ display: 'flex', padding: '20px' }}>
                 <div className="contact-info" style={contactInfoStyle}>
                     <h2>Contact Us</h2>

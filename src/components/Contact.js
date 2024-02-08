@@ -102,80 +102,85 @@ const Contact = () => {
 
     return (
             <html>
-                <section className="container">
-                    <TopMenu />
-                <head>
-                    <title>Contact form</title>
-                    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
-                    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" />
-                </head>
-                <body>
-                    <div class="main-block">
-                        <div class="left-part">
-                            <i class="fas fa-envelope"></i>
-                            <i class="fas fa-at"></i>
-                            <i class="fas fa-mail-bulk"></i>
-                        </div>
-                        <form onSubmit={handleSubmit}>
-                            <h1>Contact Us</h1>
-                            <div class="info">
-                                <input
-                                    className="fname"
-                                    type="text"
-                                    name="FullName"
-                                    id="FullName"
-                                    placeholder="Full name"
-                                    value={formData.FullName}
-                                    onChange={handleInputChange}
-                                />
-                                <input
-                                    type="text"
-                                    id="Email"
-                                    name="Email"
-                                    placeholder="Email"
-                                    value={formData.Email}
-                                    onChange={handleInputChange}
-                                />
-                                {/* Display email validation error message */}
-                                {errorMessage && errorMessage.includes('Email') && <div className="error-message">{errorMessage}</div>}
-                                <input
-                                    type="text"
-                                    id="PhoneNumber"
-                                    name="PhoneNumber"
-                                    placeholder="Phone number"
-                                    value={formData.PhoneNumber}
-                                    onChange={handleInputChange}
-                                />
+                <div className="home-container">
+                    {/* Header */}
+                    <header className="home-header">
+                        {/* Logo and navigation */}
+                        {/* Top Menu Bar */}
+                        <TopMenu />
+                    </header>
+                    <head>
+                        <title>Contact form</title>
+                        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
+                        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" />
+                    </head>
+                    <body>
+                        <div class="main-block">
+                            <div class="left-part">
+                                <i class="fas fa-envelope"></i>
+                                <i class="fas fa-at"></i>
+                                <i class="fas fa-mail-bulk"></i>
                             </div>
-                            {/* Display mobile number validation error message */}
-                            {errorMessage && errorMessage.includes('PhoneNumber') && <div className="error-message">{errorMessage}</div>}
-                            <p>Message</p>
-                            <div>
-                                <textarea
-                                    rows="4"
-                                    id="Message"
-                                    name="Message"
-                                    value={formData.Message}
-                                    onChange={handleInputChange}
-                                ></textarea>
-                            </div>
-                            <button type="submit" disabled={!!errorMessage}>Submit</button>
-                            {/* Display error message in case of submitting error */}
-                            {errorMessage && <div className="error-message">{errorMessage}</div>}
-                            {/* Custom pop-up message */}
-                            {showPopup && (
-                                <div className="overlay">
-                                    <div className="custom-popup">
-                                        <h2>Thank You!</h2>
-                                        <p>We appreciate your message. We'll get back to you soon.</p>
-                                        <button onClick={() => setShowPopup(false)}>Close</button>
-                                    </div>
+                            <form onSubmit={handleSubmit}>
+                                <h1>Contact Us</h1>
+                                <div class="info">
+                                    <input
+                                        className="fname"
+                                        type="text"
+                                        name="FullName"
+                                        id="FullName"
+                                        placeholder="Full name"
+                                        value={formData.FullName}
+                                        onChange={handleInputChange}
+                                    />
+                                    <input
+                                        type="text"
+                                        id="Email"
+                                        name="Email"
+                                        placeholder="Email"
+                                        value={formData.Email}
+                                        onChange={handleInputChange}
+                                    />
+                                    {/* Display email validation error message */}
+                                    {errorMessage && errorMessage.includes('Email') && <div className="error-message">{errorMessage}</div>}
+                                    <input
+                                        type="text"
+                                        id="PhoneNumber"
+                                        name="PhoneNumber"
+                                        placeholder="Phone number"
+                                        value={formData.PhoneNumber}
+                                        onChange={handleInputChange}
+                                    />
                                 </div>
-                            )}
-                        </form>
-                    </div>
-                </body>
-            </section>
+                                {/* Display mobile number validation error message */}
+                                {errorMessage && errorMessage.includes('PhoneNumber') && <div className="error-message">{errorMessage}</div>}
+                                <p>Message</p>
+                                <div>
+                                    <textarea
+                                        rows="4"
+                                        id="Message"
+                                        name="Message"
+                                        value={formData.Message}
+                                        onChange={handleInputChange}
+                                    ></textarea>
+                                </div>
+                                <button type="submit" disabled={!!errorMessage}>Submit</button>
+                                {/* Display error message in case of submitting error */}
+                                {errorMessage && <div className="error-message">{errorMessage}</div>}
+                                {/* Custom pop-up message */}
+                                {showPopup && (
+                                    <div className="overlay">
+                                        <div className="custom-popup">
+                                            <h2>Thank You!</h2>
+                                            <p>We appreciate your message. We'll get back to you soon.</p>
+                                            <button onClick={() => setShowPopup(false)}>Close</button>
+                                        </div>
+                                    </div>
+                                )}
+                            </form>
+                        </div>
+                    </body>
+                 </div>
             </html>
     )
 }

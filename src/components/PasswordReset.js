@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../styles/PasswordReset.css';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
+import TopMenu from './TopMenu';
 
 const PasswordReset = () => {
     const navigate = useNavigate();
@@ -64,65 +65,73 @@ const PasswordReset = () => {
     };
 
     return (
-        <div>
-            <div className="background-container"></div>
-            <div className="container form-container">
-                <h1>You can reset your password here</h1>
+        <div className="home-container">
+            {/* Header */}
+            <header className="home-header">
+                {/* Logo and navigation */}
+                {/* Top Menu Bar */}
+                <TopMenu />
+            </header>
+            <div>
+                <div className="background-container"></div>
+                <div className="container form-container">
+                    <h1>You can reset your password here</h1>
 
-                {/* Password Reset Form */}
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="email" className="label">
-                            Email:
-                        </label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email" 
-                            className="input-field"
-                            placeholder="Enter your email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                        />
-                    </div>
+                    {/* Password Reset Form */}
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="email" className="label">
+                                Email:
+                            </label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email" 
+                                className="input-field"
+                                placeholder="Enter your email"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                            />
+                        </div>
 
-                    <div className="form-group">
-                        <label htmlFor="oldPassword" className="label">
-                            Old Password:
-                        </label>
-                        <input
-                            type="password"
-                            id="oldPassword"
-                            name="oldPassword" 
-                            className="input-field"
-                            placeholder="Enter your old password"
-                            value={formData.oldPassword}
-                            onChange={handleInputChange}
-                        />
+                        <div className="form-group">
+                            <label htmlFor="oldPassword" className="label">
+                                Old Password:
+                            </label>
+                            <input
+                                type="password"
+                                id="oldPassword"
+                                name="oldPassword" 
+                                className="input-field"
+                                placeholder="Enter your old password"
+                                value={formData.oldPassword}
+                                onChange={handleInputChange}
+                            />
 
-                    </div>
+                        </div>
 
-                    <div className="form-group">
-                        <label htmlFor="newPassword" className="label">
-                            New Password:
-                        </label>
-                        <input
-                            type="password"
-                            id="newPassword"
-                            name="newPassword" 
-                            className="input-field"
-                            placeholder="Enter your new password"
-                            value={formData.newPassword}
-                            onChange={handleInputChange}
-                        />
-                    </div>
+                        <div className="form-group">
+                            <label htmlFor="newPassword" className="label">
+                                New Password:
+                            </label>
+                            <input
+                                type="password"
+                                id="newPassword"
+                                name="newPassword" 
+                                className="input-field"
+                                placeholder="Enter your new password"
+                                value={formData.newPassword}
+                                onChange={handleInputChange}
+                            />
+                        </div>
 
-                    <Button label="Reset Password" className="button p-button-primary" />
+                        <Button label="Reset Password" className="button p-button-primary" />
 
-                    {/* Display success or error message */}
-                    {successMessage && <div className="success-message">{successMessage}</div>}
-                    {errorMessage && <div className="error-message">{errorMessage}</div>}
-                </form>s
+                        {/* Display success or error message */}
+                        {successMessage && <div className="success-message">{successMessage}</div>}
+                        {errorMessage && <div className="error-message">{errorMessage}</div>}
+                    </form>s
+                </div>
             </div>
         </div>
     );
