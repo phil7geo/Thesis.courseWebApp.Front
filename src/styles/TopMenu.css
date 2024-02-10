@@ -1,17 +1,17 @@
-/* TopMenu.css */
+﻿/* TopMenu.css */
 .top-menu {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-image: url(https://www.agiosdimitriosnews.gr/wp-content/uploads/2019/03/footer-bg.jpg);
+    background-image: url('https://www.agiosdimitriosnews.gr/wp-content/uploads/2019/03/footer-bg.jpg');
     background-size: cover;
     color: #ffffff;
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 1000; /* Ensure it stays on top */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .logo-container {
@@ -41,6 +41,40 @@
     .menu-button:hover {
         background-color: #0056b3; /* Darker blue on hover */
     }
+
+.search-form {
+    position: relative;
+    display: flex;
+    align-items: center; /* Ensure vertical alignment */
+    flex-grow: 1;
+    max-width: 600px; /* Set a max-width if needed */
+    margin: 0 1rem;
+}
+
+.search-input {
+    flex-grow: 1;
+    margin-right: -2.5rem; /* Overlap the button over the input */
+    padding: 0.5rem 2.5rem 0.5rem 1rem;
+    border-radius: 2rem;
+    border: none;
+    background-color: #fff;
+    color: #333;
+}
+
+.search-button {
+    position: absolute;
+    right: 0;
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #f8f9fa;
+    border-radius: 0 2rem 2rem 0;
+    cursor: pointer;
+}
+
+.fa-search {
+    font-size: 1rem;
+    color: #333;
+}
 
 .profile-button {
     /* Additional styling if needed */

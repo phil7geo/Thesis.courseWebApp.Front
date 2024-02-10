@@ -8,8 +8,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import TopMenu from './TopMenu';
+import CustomCarousel from './Carousel';
 
 library.add(faFacebookF, faInstagram, faLinkedinIn);
+
+const carouselItems = [
+    {
+        src: "/math.jpg",
+        alt: "First slide",
+        title: "Enhance your mathematics skills",
+        description: "Attend these courses and try to be become a specialist in Maths!"
+    },
+    {
+        src: "/programming.jpg",
+        alt: "Second slide",
+        title: "Become a professional programmer",
+        description: "Are you interested to write code and be a master in one programming language?"
+    },
+    {
+        src: "/psychology.jpg",
+        alt: "Third slide",
+        title: "Gain a certification in psychology",
+        description: "Learn Psychology or improve your skills online today. Choose from a wide range of Psychology courses offered from top universities and industry leaders!"
+    },
+]
 
 const Home = () => {
     return (
@@ -22,34 +44,8 @@ const Home = () => {
                 <TopMenu />
             </header>
             {/* Main content */}
-            <main className="home-main">
-                <div id="carouselexampleindicators" className="carousel slide" data-ride="carousel">
-                    <ol className="carousel-indicators">
-                        <li data-target="#carouselexampleindicators" data-slide-to="0" className="active"></li>
-                        <li data-target="#carouselexampleindicators" data-slide-to="1"></li>
-                        <li data-target="#carouselexampleindicators" data-slide-to="2"></li>
-                    </ol>
-                    <div className="carousel-inner">
-                        <div className="carousel-item active">
-                            <img className="d-block w-100" src="/math.jpg" alt="first slide" />
-                        </div>
-                        <div className="carousel-item">
-                            <img className="d-block w-100" src="/programming.jpg" alt="second slide" />
-                        </div>
-                        <div className="carousel-item">
-                            <img className="d-block w-100" src="/psychology.jpg" alt="third slide" />
-                        </div>
-                    </div>
-                    <a className="carousel-control-prev" href="#carouselexampleindicators" role="button" data-slide="prev">
-                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span className="sr-only">Previous</span>
-                    </a>
-                    <a className="carousel-control-next" href="#carouselexampleindicators" role="button" data-slide="next">
-                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span className="sr-only">Next</span>
-                    </a>
-                </div>
-            </main>
+{/*            <main className="home-main">*/}
+                <CustomCarousel items={carouselItems} />
                 {/* Course highlights */}
 
                 <section className="course-highlights">
