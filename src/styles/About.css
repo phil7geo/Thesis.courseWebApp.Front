@@ -1,0 +1,10 @@
+.home-container {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.about-page {
+    flex: 1;
+}

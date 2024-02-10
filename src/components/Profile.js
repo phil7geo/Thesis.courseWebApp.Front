@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/Profile.css';
 import { useAuth } from '../AuthContext';
 import TopMenu from './TopMenu';
+import Footer from './Footer';
 
 const Profile = () => {
     const { isLoggedIn, userInfo } = useAuth();
@@ -218,6 +219,7 @@ const Profile = () => {
                     </div>
                 </section>
             </div>
+            <Footer />
         </div>
     );
 };

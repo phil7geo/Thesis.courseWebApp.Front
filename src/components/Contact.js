@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Contact.css';
 import TopMenu from './TopMenu';
+import Footer from './Footer';
 
 const Contact = () => {
     const [showPopup, setShowPopup] = useState(false);
@@ -154,7 +155,7 @@ const Contact = () => {
                                 </div>
                                 {/* Display mobile number validation error message */}
                                 {errorMessage && errorMessage.includes('PhoneNumber') && <div className="error-message">{errorMessage}</div>}
-                                <p>Message</p>
+                                <p className="message-label">Message</p>
                                 <div>
                                     <textarea
                                         rows="4"
@@ -179,7 +180,8 @@ const Contact = () => {
                                 )}
                             </form>
                         </div>
-                    </body>
+                </body>
+                    <Footer />
                  </div>
             </html>
     )

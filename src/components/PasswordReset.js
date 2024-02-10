@@ -3,6 +3,7 @@ import '../styles/PasswordReset.css';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import TopMenu from './TopMenu';
+import Footer from './Footer';
 
 const PasswordReset = () => {
     const navigate = useNavigate();
@@ -128,11 +129,12 @@ const PasswordReset = () => {
                         <Button label="Reset Password" className="button p-button-primary" />
 
                         {/* Display success or error message */}
-                        {successMessage && <div className="success-message">{successMessage}</div>}
-                        {errorMessage && <div className="error-message">{errorMessage}</div>}
-                    </form>s
+                        {successMessage && <div className="success-message" aria-live="assertive">{successMessage}</div>}
+                        {errorMessage && <div className="error-message" aria-live="assertive">{errorMessage}</div>}
+                    </form>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };

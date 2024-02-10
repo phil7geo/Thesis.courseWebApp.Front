@@ -1,5 +1,7 @@
 import React from 'react';
+import '../styles/About.css';
 import TopMenu from './TopMenu';
+import Footer from './Footer';
 
 const contactInfoStyle = {
     width: '50%',
@@ -8,8 +10,8 @@ const contactInfoStyle = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5', // Change background color as desired
-    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)', // Add shadow
+    backgroundColor: '#f5f5f5', 
+    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)', 
 };
 
 const mapStyle = {
@@ -55,7 +57,8 @@ function About() {
                         allowFullScreen
                     ></iframe>
                 </div>
-             </div>
+            </div>
+            <Footer />
         </div>
     );
 }

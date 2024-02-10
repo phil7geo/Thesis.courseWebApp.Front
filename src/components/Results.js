@@ -5,6 +5,7 @@ import { faClock, faMoneyCheckDollar, faStar, faVideo, faMapPin, faHeart as faHe
 import { faHeart as faHeartRegularEmpty } from '@fortawesome/free-regular-svg-icons';
 import axios from 'axios';
 import TopMenu from './TopMenu';
+import Footer from './Footer';
 
 const Results = ({ location: propLocation, initialToken }) => {
     const realLocation = useLocation();
@@ -193,6 +194,7 @@ const Results = ({ location: propLocation, initialToken }) => {
                     )}
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }

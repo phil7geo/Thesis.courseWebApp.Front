@@ -5,6 +5,7 @@ import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 import TopMenu from './TopMenu';
+import Footer from './Footer';
 
 const Registration = () => {
     const navigate = useNavigate();
@@ -310,6 +311,7 @@ const Registration = () => {
                         </div>
                     </div>
                 </div>
+                <Footer />
         </div>
     );
 }

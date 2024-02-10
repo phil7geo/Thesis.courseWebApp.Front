@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 import { useAuth } from '../AuthContext';
 import TopMenu from './TopMenu';
+import Footer from './Footer';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -254,6 +255,7 @@ const Login = () => {
                         </div>
                        </div>
                     </div>
+                    <Footer />
             </div>
     );
 };

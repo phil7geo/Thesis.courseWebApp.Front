@@ -3,8 +3,9 @@
     "",
     "\\public",
     "\\src",
-    "\\src\\components"
+    "\\src\\components",
+    "\\src\\styles"
   ],
-  "SelectedNode": "\\public\\psychology.jpg",
+  "SelectedNode": "\\src\\styles\\TopMenu.css",
   "PreviewInSolutionExplorer": false
 }
