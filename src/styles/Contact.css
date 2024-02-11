@@ -74,6 +74,10 @@ button {
     border-radius: 4px;
 }
 
+    button[type="submit"] {
+        color: #000000;
+    }
+
     button:hover {
         background: #0056b3;
         transition: background-color 0.3s ease;

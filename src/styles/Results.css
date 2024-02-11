@@ -1,0 +1,184 @@
+.results-home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    background: url('../../public/online-couses.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.results-main {
+    width: 800px;
+}
+
+.back-to-search {
+    top: 20px;
+    left: 30px;
+    width: 200px;
+    background: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+
+    .back-to-search:hover {
+        background: #0056b3; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+h3 {
+    color: #9719ee;
+    font-family: 'Fantasy', fantasy;
+    margin-bottom: 1.0rem;
+    padding-top: 1.0rem;
+}
+
+.course-card {
+    width: 100%;
+    max-width: 800px;
+    background: #fff;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.course-header {
+    background: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.course-body {
+    padding: 15px;
+    text-align: center;
+}
+
+.course-video {
+    width: 100%;
+    height: auto;
+}
+
+.course-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: 'Fantasy', fantasy; 
+    color: #5b5b5b;
+}
+    .course-info p {
+        margin: 5px 0;
+        font-size: 1.1rem; 
+        line-height: 1.5; 
+        animation: fadeInUp 0.5s ease-in-out both; 
+    }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.course-info p:hover {
+    background-color: #20e6f3;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+
+.course-action {
+    text-align: center;
+    padding: 15px;
+}
+
+    .course-action a {
+        background: #28a745;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease-in-out, transform 0.3s ease;
+    }
+
+        .course-action a:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+/* Styles for icons */
+.fa-icon {
+    margin-right: 5px;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Add color to fa icons */
+
+.fa-clock {
+    color: #f1c40f;
+}
+
+.fa-money-check-dollar {
+    color: #2ecc71;
+}
+
+.fa-star {
+    color: #f39c12;
+}
+
+.fa-video {
+    color: #e74c3c;
+}
+
+.fa-map-pin {
+    color: #3498db;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 768px) {
+    .course-info p {
+        font-size: 0.9rem; /* Slightly smaller font on mobile devices */
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .course-card {
+        width: 90%;
+    }
+
+    /* Adjust padding, margins, and font-sizes for mobile view */
+}

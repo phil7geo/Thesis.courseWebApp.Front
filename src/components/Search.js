@@ -474,15 +474,15 @@ function Search() {
             loadRNNModel();
         }, []);
 
-        return (
-            <div className="home-container">
+    return (
+            <div>
+            <div className="search-home-container">
                 {/* Header */}
                 <header className="home-header">
                     {/* Logo and navigation */}
                     {/* Top Menu Bar */}
                     <TopMenu />
                 </header>
-                <div className="left-column">
                     <h2>Search for Courses</h2>
                     <form onSubmit={handleSubmit} className="search-form">
                         <legend>Level:</legend>
@@ -716,15 +716,15 @@ function Search() {
                             </span>
                         </div>
 
+                    {/* Render Recommended Courses*/}
                         <div>
-{/*                            Render Recommended Courses*/}
                             <h3>Recommended Courses:</h3>
                             {predictedCourses && predictedCourses.length > 0 && (
-                                <ul>
+                                <ul className="course-list">
                                     {predictedCourses.slice(0, maxPredictionsToShow).map((course, index) => (
-                                        <li key={index}>
+                                        <li key={index} className="course-item">
                                             {course}
-                                             <button onClick={() => handleExploreClick(course)}>Explore</button>
+                                            <button onClick={() => handleExploreClick(course)} className="explore-button">Explore</button>
                                         </li>
                                     ))}
                                 </ul>
@@ -747,8 +747,8 @@ function Search() {
                         <div className="error-message">
                             {errors.internalServerError}
                         </div>
-                    )}
-                </div>
+                )}
+            </div>
                 <Footer />
             </div>
         );

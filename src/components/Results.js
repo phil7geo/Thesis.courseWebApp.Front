@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import  { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faMoneyCheckDollar, faStar, faVideo, faMapPin, faHeart as faHeartRegular } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegularEmpty } from '@fortawesome/free-regular-svg-icons';
 import axios from 'axios';
+import '../styles/Results.css';
 import TopMenu from './TopMenu';
 import Footer from './Footer';
 
@@ -16,6 +18,8 @@ const Results = ({ location: propLocation, initialToken }) => {
 
     const [favourites, setFavourites] = useState([]);
     const [username, setUsername] = useState(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const checkAuthStatus = async () => {
@@ -53,15 +57,6 @@ const Results = ({ location: propLocation, initialToken }) => {
         }
     }, [username]);
 
-    const resultsStyle = {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        backgroundColor: '#f4f4f4',
-    };
-
     const listStyle = {
         border: '1px solid #ddd',
         borderRadius: '10px',
@@ -69,22 +64,6 @@ const Results = ({ location: propLocation, initialToken }) => {
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
         backgroundColor: 'white',
         margin: '20px',
-    };
-
-    const courseStyle = {
-        marginBottom: '20px',
-        padding: '20px',
-        border: '1px solid #ccc',
-        borderRadius: '10px',
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-        backgroundColor: '#fff',
-    };
-
-    const videoStyle = {
-        width: '100%',
-        height: '315px',
-        marginBottom: '15px',
-        borderRadius: '8px',
     };
 
     const heartButtonStyle = {
@@ -123,37 +102,45 @@ const Results = ({ location: propLocation, initialToken }) => {
     };
 
     const renderCourseSection = (courses) => {
-        return (      
+        return (  
                 <>
-                    <h3>Courses:</h3>
+                <h3>Results (Courses):</h3>
                     {courses.map((course, index) => (
-                        <div key={index} style={courseStyle}>
+                        <div key={index} className="course-card">
+                            <div className="course-header">
                             <h4>{course.title}</h4>
                             {/* Heart icon for adding/removing from favorites */}
                             {favourites && (
                                 <FontAwesomeIcon
                                     icon={favourites && favourites.includes(course.title) ? faHeartRegular : faHeartRegularEmpty}
-                                    style={heartButtonStyle}
+                                         style={heartButtonStyle}
+                                        className="fa-icon heart-icon"
                                     onClick={() => toggleFavourite(course.title)}
                                 />
-                            )}
+                                )}
+                        </div>
                             <iframe
-                                style={videoStyle}
+                                className="course-video"
                                 src={`https://www.youtube.com/embed/${getVideoIdFromYouTube(course.title)}`}
                                 title={course.title}
                                 frameBorder="0"
                                 allowFullScreen
                             ></iframe>
-                            <p>{`${course.level} Level`}</p>
-                            <p>{`${course.duration}`} <FontAwesomeIcon icon={faClock} /></p>
-                            <p>{course.onSale ? 'On Sale 50%. Please hurry up' : 'Not on sale'}</p>
-                            <p>{`${course.price}`} <FontAwesomeIcon icon={faMoneyCheckDollar} /></p>
-                            <p>{`${course.rating}`} <FontAwesomeIcon icon={faStar} /></p>
-                            <p>{`In ${course.language}`}</p>
-                            <p>{`${course.courseFormat} method (via google meet)`} <FontAwesomeIcon icon={faVideo} /></p>
-                            <p>{`Location: ${course.location || 'Unknown'} (${course.town || 'Unknown'})`} <FontAwesomeIcon icon={faMapPin} /></p>
-
-                            <p><a href={"/home"} rel="noopener noreferrer">Click here to purchase the course</a></p>
+                            <div className="course-body">
+                                <div className="course-info">
+                                    <p>Level: {`${course.level}`}</p>
+                                    <p>Duration: {`${course.duration}`} <FontAwesomeIcon icon={faClock} className="fa-icon fa-clock" /></p>
+                                    <p>Sale: {course.onSale ? 'On Sale 50%. Please hurry up' : 'Not on sale'}</p>
+                                    <p>Price: {`${course.price}`} <FontAwesomeIcon icon={faMoneyCheckDollar} className="fa-money-check-dollar" /></p>
+                                    <p>Rating: {`${course.rating}`} <FontAwesomeIcon icon={faStar} className="fa-star" /></p>
+                                    <p>Language: {`In ${course.language}`}</p>
+                                    <p>Course Method: {`${course.courseFormat} method (via google meet)`} <FontAwesomeIcon icon={faVideo} className="fa-video" /></p>
+                                    <p>{`Location: ${course.location || 'Unknown'} (${course.town || 'Unknown'})`} <FontAwesomeIcon icon={faMapPin} className="fa-map-pin" /></p>
+                                </div>
+                            </div>
+                            <div className="course-action">
+                                <p><a href={"/home"} rel="noopener noreferrer">Click here to purchase the course</a></p>
+                            </div>
                         </div>
                     ))}
                 </>
@@ -179,20 +166,27 @@ const Results = ({ location: propLocation, initialToken }) => {
         }
     };
 
+    const handleBackToSearchClick = async (e) => {
+        e.preventDefault();
+        navigate('/search');
+    }
+
     return (
         <div>
-            <div>
-                <TopMenu />
-            </div>
-            <div style={resultsStyle}>
-                <h2>Results (Courses)</h2>
-                <div style={listStyle}>
-                    {searchResults && (
-                        <>
-                            {renderCourseSection(searchResults)}
-                        </>
-                    )}
+            <div className="results-home-container">
+                <header className="home-header">
+                    <TopMenu />
+                </header>
+                <div className="results-main">
+                    <div style={listStyle}>
+                        {searchResults && (
+                            <>
+                                {renderCourseSection(searchResults)}
+                            </>
+                        )}
+                    </div>
                 </div>
+                <button onClick={handleBackToSearchClick} class="back-to-search"><i class="fa fa-arrow-left"></i> Back to Search</button>
             </div>
             <Footer />
         </div>

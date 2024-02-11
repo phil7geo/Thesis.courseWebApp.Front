@@ -15,22 +15,22 @@ library.add(faFacebookF, faInstagram, faLinkedinIn);
 
 const carouselItems = [
     {
-        src: "/math.jpg",
-        alt: "First slide",
-        title: "Enhance your mathematics skills",
-        description: "Attend these courses and try to be become a specialist in Maths!"
-    },
-    {
         src: "/programming.jpg",
-        alt: "Second slide",
+        alt: "First slide",
         title: "Become a professional programmer",
         description: "Are you interested to write code and be a master in one programming language?"
     },
     {
         src: "/psychology.jpg",
-        alt: "Third slide",
+        alt: "Second slide",
         title: "Gain a certification in psychology",
         description: "Learn Psychology or improve your skills online today. Choose from a wide range of Psychology courses offered from top universities and industry leaders!"
+    },
+    {
+        src: "/math.jpg",
+        alt: "Third slide",
+        title: "Enhance your mathematics skills",
+        description: "Attend these courses and try to be become a specialist in Maths!"
     },
 ]
 
@@ -50,7 +50,6 @@ const Home = () => {
 
                 <section className="course-highlights">
                     {/* Featured courses */}
-{/*                    <h2>Featured Courses</h2>*/}
                     <div className="course">
                         <h3>Math</h3>
                         <p>Description: Learn fundamental mathematical concepts with engaging video lessons.</p>
@@ -75,31 +74,33 @@ const Home = () => {
                 </section>
 
                 {/* Additional sections */}
-                <section className="additional-sections">
-                    <h2>Student Testimonials</h2>
-                    <div className="testimonial">
-                        <p>"I learned so much from the Programming course. The instructors are fantastic!"</p>
-                        <p className="author">- John Doe</p>
-                </div>
-                <div className="testimonial">
-                    <p>"So happy to gain my certificate in Web Development. Lovely application!"</p>
-                    <p className="author">- George Georgiou</p>
-                </div>
-
-                    <div className="section">
-                        <h2>Subscribe to Our Newsletter</h2>
-                        <form className="subscription-form">
-                            <input type="email" placeholder="Enter your email" />
-                            <Button label="Subscribe" className="p-button-primary" />
-                        </form>
+            <div className="additional-sections">
+                <div className="section-card">
+                        <h2>Student Testimonials</h2>
+                        <div className="testimonial">
+                            <p>"I learned so much from the Programming course. The instructors are fantastic!"</p>
+                            <p className="author">- John Doe</p>
                     </div>
-                    {/* call to action */}
-                <div className="cta-section">
-                    <h2>Are you ready to explore new courses?</h2>
-                    <p>Find the perfect course for you and start learning today.</p>
-                    <Link to="/search" className="btn-get-started">Get Started</Link>
+                    <div className="testimonial">
+                        <p>"So happy to gain my certificate in Web Development. Lovely application!"</p>
+                        <p className="author">- George Georgiou</p>
+                    </div>
+
+                        <div className="section">
+                            <h2>Subscribe to Our Newsletter</h2>
+                            <form className="subscription-form">
+                                <input type="email" placeholder="Enter your email" />
+                                <Button label="Subscribe" className="p-button-primary" />
+                            </form>
+                        </div>
+                        {/* call to action */}
+                    <div className="cta-section">
+                        <h2>Are you ready to explore new courses?</h2>
+                        <p>Find the perfect course for you and start learning today.</p>
+                        <Link to="/search" className="btn-get-started">Get Started</Link>
+                    </div>
                 </div>
-                </section>
+              </div>
 
             {/* Footer */}
             <Footer />

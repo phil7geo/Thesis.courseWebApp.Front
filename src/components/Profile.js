@@ -87,8 +87,8 @@ const Profile = () => {
         </div>
     );
 
-    return (
-        <div>
+      return (
+        <div className="content-wrapper">
             <link
                 href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
                 rel="stylesheet"
@@ -103,11 +103,9 @@ const Profile = () => {
                 <section id="content" className="container">
                     <div className="page-heading">
                         <div className="media clearfix">
-                            <div className="media-left pr30">
-                                <a href="#">
-                                    <img className="media-object mw150" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="..." />
-                                </a>
-                            </div>
+                            <aside className="media-left pr30">
+                                <img className="media-object mw150" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Profile" />
+                            </aside>
                             <div className="media-body va-m">
                                 <h2 className="media-heading">
                                     {isLoggedIn && userInfo ? userInfo.username : 'Guest'}
@@ -126,7 +124,7 @@ const Profile = () => {
                                     </ul>
                                 </div>
                             </div>
-                            <div className="col-md-4">
+                            <aside className="col-md-4">
                                 <div className="panel">
                                     <div className="panel-heading">
                                         <span className="panel-icon">
@@ -214,14 +212,15 @@ const Profile = () => {
                                 </div>
                                 {/* Additional Content Placement */}
                                 {additionalContent}
-                            </div> 
+                            </aside >
                         </div>
                     </div>
-                </section>
+                    </section>
             </div>
             <Footer />
         </div>
     );
+
 };
 
 export default Profile;

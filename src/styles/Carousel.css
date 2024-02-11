@@ -36,13 +36,10 @@
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     }
 
-.carousel-indicators {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    z-index: 15;
-    transform: translateX(-50%); /* Center the indicators */
-}
+    .carousel-caption h3 {
+        color: white;
+        font-family: Arial
+    }
 
     .carousel-indicators li {
         display: inline-block;

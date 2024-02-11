@@ -1,4 +1,9 @@
 /* Home.css */
+
+html {
+    scroll-behavior: smooth;
+}
+
 .home-container {
     font-family: 'Poppins', sans-serif;
     color: #333;
@@ -74,6 +79,8 @@
 
     .button:hover {
         background-color: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     }
 
 
@@ -86,6 +93,15 @@ h2 {
     font-size: 0,5rem;
     color: #7d3fe4 !important;
 }
+
+input[type="text"], input[type="email"] {
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+    input[type="text"]:focus, input[type="email"]:focus {
+        box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+        border-color: #007bff;
+    }
 
 /* Featured Courses */
 .course-highlights {
@@ -128,7 +144,12 @@ h2 {
     margin: 2rem 0;
     font-style: italic;
     position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+    .testimonial:hover {
+        transform: scale(1.03);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
 
     .testimonial::before,
     .testimonial::after {
@@ -180,19 +201,69 @@ h2 {
 
 /* Additional Sections */
 .additional-sections {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 4rem 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    align-items: start;
+    margin: 2rem auto;
+    padding: 1rem;
+    max-width: 1200px;
 }
 
+.section-card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+    .section-card h2 {
+        color: #333;
+        margin-bottom: 1rem;
+    }
+
+    .section-card p {
+        color: #555;
+        margin-bottom: 2rem;
+    }
+
+    .section-card .button {
+        background-color: #007bff;
+        color: white;
+        padding: 0.8rem 2rem;
+        border-radius: 20px;
+        text-transform: uppercase;
+        font-weight: bold;
+        text-decoration: none;
+        align-self: center;
+        transition: background-color 0.3s ease;
+    }
+
+        .section-card .button:hover {
+            background-color: #0056b3;
+            color: white;
+            text-decoration: none;
+        }
+
+@media (max-width: 768px) {
+    .additional-sections {
+        grid-template-columns: 1fr;
+    }
+}
+
+You can a
 /* Call to Action Section */
 .cta-section {
     text-align: center;
     padding: 2rem;
-    background-color: #f8f9fa; 
+    background-color: #f8f9fa;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     margin: 2rem 0;
 }
 
@@ -228,10 +299,47 @@ h2 {
 /* Subscription Form Styles */
 .subscription-form {
     display: flex;
-    gap: 10px;
+    flex-direction: column; 
+    align-items: center; 
+    max-width: 500px; 
+    width: 100%; 
+    margin: 0 auto;
+    padding: 2rem; 
+    background-color: #f8f9fa; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
 }
 
-    .subscription-form input {
-        flex: 1;
-        padding: 10px;
+    .subscription-form input[type="email"] {
+        width: 100%; 
+        padding: 1rem; 
+        margin-bottom: 1rem; 
+        font-size: 1rem; 
+        border: 1px solid #ddd;
+        border-radius: 4px; 
     }
+
+    .subscription-form button {
+        width: 100%; 
+        padding: 1rem; 
+        font-size: 1rem; 
+        border: none; 
+        border-radius: 4px; 
+        background-color: #007bff; 
+        color: white; 
+        cursor: pointer; 
+        transition: background-color 0.3s ease; 
+    }
+
+        .subscription-form button:hover {
+            background-color: #0056b3;
+        }
+
+    .subscription-form input[type="email"]::placeholder {
+        color: #888; 
+    }
+
+.scroll-indicator {
+    animation: bounce 2s infinite;
+}
+

@@ -1,60 +1,124 @@
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(to bottom, #6a11cb 0%, #2575fc 100%);
-}
-
-.home-container {
+.search-home-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 40px;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    background: url('../../public/online-couses.jpg') no-repeat center center fixed;
+    background-size: cover;
 }
 
-/* Form container */
+    .search-home-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.5); 
+        z-index: -1;
+    }
+
 .search-form {
-    background: rgba(255, 255, 255, 0.95);
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 50px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
+    margin-bottom: 100px;
     width: 100%;
-    max-width: 600px;
+    max-width: 900px;
+    animation: fadeIn 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    overflow-y: auto;
+    max-height: 90vh;
 }
+
+    .search-form legend {
+        color: #9719ee;
+        font-family: 'Fantasy', fantasy;
+        margin-bottom: 1.0rem;
+        padding-top: 1.0rem;
+    }
+
+    .search-form select,
+    .search-form input,
+    .search-form button,
+    .search-form legend {
+        font-size: 1.2rem; 
+    }
 
 /* Input and Select styles */
 select,
 input {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
     border-radius: 5px;
-    transition: all 0.3s ease;
+    transition: border 0.3s, box-shadow 0.3s;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    color: #333;
 }
 
     input:focus,
     select:focus {
         border-color: #3498db;
-        box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+        outline: none;
     }
 
-/* Button styles */
+.search-form input::placeholder {
+    font-style: italic;
+    color: #bfc9d9;
+}
+
 button {
     width: 100%;
     padding: 15px;
-    margin-top: 15px;
+    margin-top: 10px;
     background-color: #3498db;
     color: white;
-    border: none;
+    border: 1px solid #3498db;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    outline: none;
 }
 
-    button:hover {
-        background-color: #217dbb;
+    button:hover, button:focus {
+        background-color: #2980b9; 
+        border-color: #2980b9; 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+/* Specific button styles */
+.clear-button {
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+}
+
+    .clear-button:hover,
+    .clear-button:focus {
+        background-color: #c0392b;
+        border-color: #c0392b;
+    }
+
+.search-button {
+    background-color: #2ecc71;
+    border-color: #2ecc71;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+}
+
+    .search-button:hover,
+    .search-button:focus {
+        background-color: #27ae60;
+        border-color: #27ae60;
     }
 
 /* Checkbox group styles */
@@ -81,7 +145,52 @@ button {
 /* Recommended Courses styles */
 .recommended-courses {
     padding: 20px 0;
+    list-style-type: none;
 }
+
+    .recommended-courses h3 {
+        text-align: center;
+        color: #007bff;
+        margin-bottom: 1rem;
+    }
+
+.course-list {
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.course-item {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .course-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+.explore-button {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+    .explore-button:hover {
+        background-color: #0056b3;
+    }
+
 
 /* Error and success message styles */
 .error-message,
@@ -108,5 +217,19 @@ button {
 @media (max-width: 768px) {
     .search-form {
         width: 90%;
+        padding: 15px;
     }
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
