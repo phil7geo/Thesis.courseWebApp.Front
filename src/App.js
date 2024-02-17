@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { AuthProvider } from './AuthContext'; // Import AuthProvider
+import { AuthProvider } from './AuthContext'; 
 
 // Components
 import Home from './components/Home';
@@ -13,20 +12,12 @@ import Search from './components/Search';
 import Results from './components/Results';
 import PasswordReset from './components/PasswordReset';
 import About from './components/About';
-import Logout from './components/Logout';
+import Logout from './components/sub/Logout';
 
 const App = () => {
-    const [backendResponse, setBackendResponse] = useState('');
+
     // Assume storing of the JWT token in localStorage after a successful login
     const token = localStorage.getItem('jwtToken');
-
-    useEffect(() => {
-        // Fetch data from the backend
-        fetch('http://localhost:5194/api/sample')
-            .then(response => response.text())
-            .then(data => setBackendResponse(data))
-            .catch(error => console.error('Error fetching data:', error));
-    }, []);
 
     return (
         // Wrap the main application component with AuthProvider

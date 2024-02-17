@@ -4,8 +4,8 @@ import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 import { useAuth } from '../AuthContext';
-import TopMenu from './TopMenu';
-import Footer from './Footer';
+import TopMenu from './sub/TopMenu';
+import Footer from './sub/Footer';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -56,7 +56,7 @@ const Login = () => {
                     const data = await response.json();
                     const { token } = data;
 
-                    // Store the token securely (consider alternatives like HTTP-only cookies)
+                    // Store the token
                     localStorage.setItem('jwtToken', token);
                     console.log('Stored token:', token);
 
@@ -64,7 +64,6 @@ const Login = () => {
                     setLoginSuccess(true);
                     navigate('/home');
                 } else {
-/*                    setLoggedIn(false);*/
                     setLoginSuccess(false);
                     throw new Error(`Error logging in: ${response.statusText}`);
                 }
@@ -87,19 +86,18 @@ const Login = () => {
         return regex.test(value);
     };
 
+    // ToDo fix: 400 error with google api  - no access
     const responseGoogle = (response) => {
         // Handle Google Sign-In response here
         console.log(response);
 
         if (response && response.profileObj) {
-            // Implement your login logic here
-            // For now, let's just log the form data
             console.log('Login form submitted:', response.profileObj);
-            setLoginSuccess(true); // Set login success to true
-            // Redirect to the "/home" page
+            setLoginSuccess(true);
+            // Redirect to the "/home" page after google log-in
             navigate('/home');
         } else {
-            setLoginSuccess(false); // Set login success to false
+            setLoginSuccess(false); 
         }
     };
 
@@ -161,10 +159,6 @@ const Login = () => {
         width: '200px'
     };
 
-    const containerStyle = {
-        padding: '50px'
-    };
-
     const leftColumnStyle = {
         paddingRight: '0px',
     };
@@ -176,7 +170,7 @@ const Login = () => {
     const imageStyle = {
         width: '100%',
         height: '100%',
-        objectFit: 'cover', // Ensures the image covers the entire container
+        objectFit: 'cover', 
     };
 
 
@@ -207,7 +201,7 @@ const Login = () => {
                                         clientId="388649358661-crn3rvemlmcvjr0tdi29jrj89artvrkd.apps.googleusercontent.com"
                                         buttonText="Sign in with Google"
                                         onSuccess={responseGoogle}
-                                        onFailure={responseGoogle} // Optional: Handle failure
+                                        onFailure={responseGoogle} // Handle failure
                                         cookiePolicy={'single_host_origin'}
                                     />
                                     <h6>or</h6>

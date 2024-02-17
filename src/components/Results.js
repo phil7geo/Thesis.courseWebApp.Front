@@ -6,8 +6,8 @@ import { faClock, faMoneyCheckDollar, faStar, faVideo, faMapPin, faHeart as faHe
 import { faHeart as faHeartRegularEmpty } from '@fortawesome/free-regular-svg-icons';
 import axios from 'axios';
 import '../styles/Results.css';
-import TopMenu from './TopMenu';
-import Footer from './Footer';
+import TopMenu from './sub/TopMenu';
+import Footer from './sub/Footer'; 
 
 const Results = ({ location: propLocation, initialToken }) => {
     const realLocation = useLocation();
@@ -21,6 +21,7 @@ const Results = ({ location: propLocation, initialToken }) => {
 
     const navigate = useNavigate();
 
+    // call check-auth get request to retrieve the username and handle the favourite courses based on the displayed courses in the results page
     useEffect(() => {
         const checkAuthStatus = async () => {
             try {
@@ -45,6 +46,7 @@ const Results = ({ location: propLocation, initialToken }) => {
         checkAuthStatus();
     }, [initialToken]);
 
+    // call get-favourites call to retrieve the existing favourite courses of the user from the Database
     useEffect(() => {
         if (username) {
             axios.post('http://localhost:5194/api/get-favourites', { username })
@@ -74,12 +76,12 @@ const Results = ({ location: propLocation, initialToken }) => {
 
     };
 
+    // call to add or remove a course from the user's favourite courses
     const toggleFavourite = (courseTitle) => {
         if (username) {
             const isFavourite = favourites.includes(courseTitle);
             const apiEndpoint = isFavourite ? 'remove-favourite' : 'add-favourite';
 
-            // Constructing the payload similar to the search API request
             const payload = {
                 courseTitle,
                 username,
@@ -101,6 +103,7 @@ const Results = ({ location: propLocation, initialToken }) => {
         }
     };
 
+    // display the information of the given course that is returned after submitting search form
     const renderCourseSection = (courses) => {
         return (  
                 <>
@@ -118,7 +121,9 @@ const Results = ({ location: propLocation, initialToken }) => {
                                     onClick={() => toggleFavourite(course.title)}
                                 />
                                 )}
-                        </div>
+                            </div>
+                            {/* Youtube video of the given course based on it's title */}
+                            {/* ToDo: Need fix. No access using Youtube API */}
                             <iframe
                                 className="course-video"
                                 src={`https://www.youtube.com/embed/${getVideoIdFromYouTube(course.title)}`}

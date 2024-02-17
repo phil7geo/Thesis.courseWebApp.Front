@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Contact.css';
-import TopMenu from './TopMenu';
-import Footer from './Footer';
+import TopMenu from './sub/TopMenu';
+import Footer from './sub/Footer';
 
 const Contact = () => {
     const [showPopup, setShowPopup] = useState(false);
@@ -62,19 +62,18 @@ const Contact = () => {
             });
 
             if (response.ok) {
-                // Message sent successfully, handle accordingly
                 console.log('Message sent successfully');
 
                 // Clear error message
                 setErrorMessage('');
 
-                // Show the custom pop-up message
+                // Show the custom pop-up message to the UI
                 setShowPopup(true);
 
-                // Set success message
+                // Set success message to the UI
                 setSuccessMessage('Message sent successfully');
 
-                // Reset the form fields after submitting
+                // Reset the form fields after submitting the contact form
                 setFormData({
                     FullName: '',
                     Email: '',
@@ -82,7 +81,7 @@ const Contact = () => {
                     Message: '',
                 });
             } else {
-                // Message sending failed, handle accordingly
+                // Message sending failed
                 console.error('Message sending failed');
             }
         } catch (error) {

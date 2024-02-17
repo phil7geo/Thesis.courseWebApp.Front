@@ -1,5 +1,3 @@
-/* Home.css */
-
 html {
     scroll-behavior: smooth;
 }
@@ -256,7 +254,6 @@ input[type="text"], input[type="email"] {
     }
 }
 
-You can a
 /* Call to Action Section */
 .cta-section {
     text-align: center;

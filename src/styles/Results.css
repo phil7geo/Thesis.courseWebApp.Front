@@ -168,17 +168,16 @@ h3 {
     }
 }
 
+/* Responsive design */
 @media (max-width: 768px) {
     .course-info p {
         font-size: 0.9rem; /* Slightly smaller font on mobile devices */
     }
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
     .course-card {
         width: 90%;
     }
 
-    /* Adjust padding, margins, and font-sizes for mobile view */
 }

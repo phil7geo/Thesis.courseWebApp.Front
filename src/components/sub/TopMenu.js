@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Logout from './Logout';
-import { useAuth } from '../AuthContext';
-import '../styles/TopMenu.css';
+import { useAuth } from '../../AuthContext';
+import '../../styles/TopMenu.css';
 
 const basicLogoStyle = {
     width: '80px',

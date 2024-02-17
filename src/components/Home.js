@@ -4,12 +4,11 @@ import { Button } from 'primereact/button';
 import '../styles/Home.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faFacebookF, faInstagram, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import TopMenu from './TopMenu';
-import Footer from './Footer';
-import CustomCarousel from './Carousel';
+import TopMenu from './sub/TopMenu';
+import Footer from './sub/Footer';
+import CustomCarousel from './sub/Carousel';
 
 library.add(faFacebookF, faInstagram, faLinkedinIn);
 
@@ -49,7 +48,7 @@ const Home = () => {
                 {/* Course highlights */}
 
                 <section className="course-highlights">
-                    {/* Featured courses */}
+                    {/* Featured courses (Dummy courses - examples) */}
                     <div className="course">
                         <h3>Math</h3>
                         <p>Description: Learn fundamental mathematical concepts with engaging video lessons.</p>

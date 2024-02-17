@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/About.css';
-import TopMenu from './TopMenu';
-import Footer from './Footer';
+import TopMenu from './sub/TopMenu';
+import Footer from './sub/Footer';
 
 const contactInfoStyle = {
     width: '50%',

@@ -1,7 +1,7 @@
 // Logout.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../../AuthContext';
 
 const Logout = () => {
     const { setLoggedIn, initialToken, setLoggedOut } = useAuth();

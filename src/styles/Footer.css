@@ -8,9 +8,7 @@
 }
 
 #footer {
-    /*    background: #f7f7f7;*/
     margin-right: -40px;
-    /* background-image: url(https://www.agiosdimitriosnews.gr/wp-content/uploads/2019/03/footer-bg.jpg);*/
 }
 
 #footer2 {
@@ -41,8 +39,6 @@
     }
 
 .social-icons {
-    /* display: flex;
-    gap: 3rem; */
     display: flex;
     flex-direction: column;
     gap: 1rem;

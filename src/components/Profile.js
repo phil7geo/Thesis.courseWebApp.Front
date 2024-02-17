@@ -1,12 +1,13 @@
 import React from 'react';
 import '../styles/Profile.css';
 import { useAuth } from '../AuthContext';
-import TopMenu from './TopMenu';
-import Footer from './Footer';
+import TopMenu from './sub/TopMenu';
+import Footer from './sub/Footer';
 
 const Profile = () => {
     const { isLoggedIn, userInfo } = useAuth();
 
+/*     -------------------------- DUMMY DATA  --------------------------      */
     const userPopularityData = [
         { id: 1, firstName: 'John', revenue: '$5000' },
         { id: 2, firstName: 'Alice', revenue: '$3000' },
@@ -42,7 +43,7 @@ const Profile = () => {
         return `Hi, I'm ${username}. I have a passion for learning and exploring new opportunities. Feel free to connect with me at ${email}. With 6 years of experience, I bring a wealth of knowledge. My education background includes 1 important degree. I'm proud of my accomplishments, having achieved notable milestones.`;
     };
 
-    // Function to get a random location
+    // random location
     const getRandomLocation = () => {
         const cities = ['New York', 'London', 'Tokyo', 'Paris', 'Berlin'];
         const countries = ['USA', 'UK', 'Japan', 'France', 'Germany'];
@@ -51,24 +52,24 @@ const Profile = () => {
         return `${randomCity}, ${randomCountry}`;
     };
 
+    // random interests
     const getRandomInterests = () => {
         const interests = ['Web Development', 'Machine Learning', 'Gaming', 'Photography', 'Travel'];
         return interests.slice(0, Math.floor(Math.random() * interests.length) + 1).join(', ');
     };
 
-    // Function to get random programming languages
+    // random programming languages
     const getRandomProgrammingLanguages = () => {
         const languages = ['JavaScript', 'C#', 'Python', 'Java', 'TypeScript'];
         return languages.slice(0, Math.floor(Math.random() * languages.length) + 1).join(', ');
     };
 
-    // Function to get random hobbies
+    // random hobbies
     const getRandomHobbies = () => {
         const hobbies = ['Cooking', 'Playing Music', 'Fitness', 'Gardening', 'Painting'];
         return hobbies.slice(0, Math.floor(Math.random() * hobbies.length) + 1).join(', ');
     };
 
-    // Function to get random interests
     const additionalContent = (
         <div className="additional-content">
             <h3>Additional Information</h3>
@@ -82,7 +83,6 @@ const Profile = () => {
                 <li><strong>Interests:</strong> {getRandomInterests()}</li>
                 <li><strong>Favorite Programming Languages:</strong> {getRandomProgrammingLanguages()}</li>
                 <li><strong>Hobbies:</strong> {getRandomHobbies()}</li>
-                {/* Add more content as needed */}
             </ul>
         </div>
     );
@@ -210,7 +210,7 @@ const Profile = () => {
                                         </ul>
                                     </div>
                                 </div>
-                                {/* Additional Content Placement */}
+                                {/* Additional Content Placement - personalized and other dummy data-information */}
                                 {additionalContent}
                             </aside >
                         </div>

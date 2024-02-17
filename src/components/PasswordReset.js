@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import '../styles/PasswordReset.css';
 import { Button } from 'primereact/button';
-import { useNavigate } from 'react-router-dom';
-import TopMenu from './TopMenu';
-import Footer from './Footer';
+import TopMenu from './sub/TopMenu';
+import Footer from './sub/Footer';
 
 const PasswordReset = () => {
-    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -45,15 +43,11 @@ const PasswordReset = () => {
                 });
 
                 if (response.ok) {
-                    // Password reset successful, handle accordingly
                     console.log('Password reset successful');
-                    // Password reset successful
                     setSuccessMessage('Password reset successful. Check your email for the reset link');
                     setErrorMessage('');
 
-/*                    navigate('/home');*/
                 } else {
-                    // Password reset failed, handle accordingly
                     console.error('Password reset failed');
                 }
             } catch (error) {
@@ -128,7 +122,7 @@ const PasswordReset = () => {
 
                         <Button label="Reset Password" className="button p-button-primary" />
 
-                        {/* Display success or error message */}
+                        {/* Display success or error message depends on the given credentials for password-reset */}
                         {successMessage && <div className="success-message" aria-live="assertive">{successMessage}</div>}
                         {errorMessage && <div className="error-message" aria-live="assertive">{errorMessage}</div>}
                     </form>

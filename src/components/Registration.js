@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
-import TopMenu from './TopMenu';
-import Footer from './Footer';
+import TopMenu from './sub/TopMenu';
+import Footer from './sub/Footer';
 
 const Registration = () => {
     const navigate = useNavigate();
@@ -59,7 +58,7 @@ const Registration = () => {
                     : 'Password must contain at least 8 characters with at least one letter and one digit.',
             });
         } else if (name === 'confirmPassword') {
-            // Check if password and confirmPassword match
+            // password and confirmPassword no match
             if (formData.password !== value) {
                 setErrors({
                     ...errors,
@@ -120,7 +119,6 @@ const Registration = () => {
         if (!/^(?=.*\d)[a-zA-Z0-9]{5,}$/.test(username)) {
             // Username should have at least 5 characters, including at least one digit
             isFormValid = false;
-            /*            setErrors('username', 'Username is invalid');*/
             setErrors({ ...errors, username: 'Username is invalid' });
         }
 
@@ -128,28 +126,25 @@ const Registration = () => {
         if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
             // Basic email format validation
             isFormValid = false;
-/*            setErrors('email', 'Email is invalid');*/
             setErrors({ ...errors, email: 'Email is invalid' });
         }
 
-        // Password validation (you can customize this based on your requirements)
+        // Password validation
         if (password.length < 8) {
             isFormValid = false;
-/*            setErrors('password', 'Password must be at least 8 characters');*/
             setErrors({ ...errors, password: 'Password must be at least 8 characters' });
         }
 
         // Confirm password validation
         if (password !== confirmPassword) {
             isFormValid = false;
-/*            setErrors('confirmPassword', 'Passwords do not match');*/
             setErrors({ ...errors, confirmPassword: 'Passwords do not match' });
         }
 
         return isFormValid;
     };
 
-    // Function to apply dynamic styles based on validation results
+    // apply dynamic styles based on validation results
     const getInputStyle = (fieldName) => {
         if (errors[fieldName]) {
             return {
@@ -160,27 +155,21 @@ const Registration = () => {
         return {};
     };
 
+    // ToDo fix: 400 error with google api  - no access
     const responseGoogle = (response) => {
-        // Handle Google Sign-In response here
+        // Handle Google Sign-In response
         console.log(response);
 
         if (response.isFormValid) {
-            // Implement your login logic here
-            // For now, let's just log the form data
             console.log('Registration form submitted:', formData);
-            setRegistrationSuccess(true); // Set login success to true
-            // Redirect to the "/home" page
+            setRegistrationSuccess(true); 
             navigate('/home');
         } else {
-            setRegistrationSuccess(false); // Set login success to false
+            setRegistrationSuccess(false);
         }
     };
 
     //Other CSS styles
-
-    const containerStyle = {
-        marginTop: '1%',
-    };
 
     const leftColumnStyle = {
         paddingRight: '0px',

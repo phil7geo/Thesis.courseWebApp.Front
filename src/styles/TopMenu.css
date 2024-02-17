@@ -1,9 +1,8 @@
-﻿/* TopMenu.css */
-.top-menu {
+﻿.top-menu {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px; /* Adjust padding to ensure alignment */
+    padding: 0 20px; 
     background-image: url('https://www.agiosdimitriosnews.gr/wp-content/uploads/2019/03/footer-bg.jpg');
     background-size: cover;
     color: #ffffff;

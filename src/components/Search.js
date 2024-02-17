@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import * as tf from '@tensorflow/tfjs';
 import { useAuth } from '../AuthContext';
-import TopMenu from './TopMenu';
-import Footer from './Footer';
+import TopMenu from './sub/TopMenu';
+import Footer from './sub/Footer';
 function Search() {
     const navigate = useNavigate();
 
@@ -42,9 +42,10 @@ function Search() {
     const maxPredictionsToShow = 5;
     const { getAuthenticatedUser } = useAuth();
 
+    // List of possible main greek towns for sychronous courses (Main Town field)
     const greekTowns = ['Athens', 'Thessaloniki', 'Patras', 'Heraklion', 'Larissa', 'Volos', 'Ioannina'];
 
-    // List of possible subjects
+    // List of possible subjects (Subjects field)
     const possibleSubjects = ['Mathematics', 'Physics', 'Chemistry', 'History', 'Literature',
         'Biology', 'Philosophy', 'Languages', 'Jurisprudence', 'Medicine',
         'Business Administration', 'Artificial Intelligence (AI)', 'Finance',
@@ -77,7 +78,7 @@ function Search() {
     const handleExploreClick = (course) => {
         console.log(`Explore clicked for ${course}`);
 
-        // Construct dummy data similar to the searchResults format in order to retrieve the courseTitle info in results page
+        // Construct dummy data similar to the searchResults format in order to retrieve the courseTitle info in results page after clicking recommended course link
         const searchResults = [{
             title: course.trim(),
             subject: "",

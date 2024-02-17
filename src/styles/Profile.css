@@ -46,18 +46,8 @@ body {
     padding: 30px;
 }
 
-/* Headings and page sections */
-/*.page-heading {
-    position: relative;
-    padding: 30px 40px;
-    margin: -25px -20px 25px;
-    background-color: #ffffff;*/ /* White background */
-    /*box-shadow: 0 2px 5px rgba(0,0,0,0.1);*/ /* Subtle shadow for depth */
-    /*transition: all 0.3s ease;*/ /* Smooth transition for hover effects */
-/*}*/
-
     .page-heading:hover {
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* Deeper shadow on hover for interactive effect */
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
     }
 
 /* Panels and content boxes */
@@ -66,22 +56,22 @@ body {
     margin-bottom: 27px;
     background-color: #ffffff;
     border-radius: 3px;
-    border: none; /* Remove borders for a cleaner look */
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Consistent shadow like page-heading */
-    transition: box-shadow 0.3s ease; /* Smooth transition for hover effects */
+    border: none; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
+    transition: box-shadow 0.3s ease; 
 }
 
     .panel:hover {
-        box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Slightly deeper shadow on hover */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15); 
     }
 
 .panel-heading {
-    height: auto; /* Allow for flexible height */
-    line-height: 1.5; /* More relaxed line height */
-    background: #E8EFF5; /* Lighter background for the header */
-    color: #333; /* Darker color for contrast */
-    padding: 15px; /* More padding for a spacious look */
-    border-bottom: 1px solid #D0DBE5; /* Subtle border for separation */
+    height: auto; 
+    line-height: 1.5; 
+    background: #E8EFF5; 
+    color: #333; 
+    padding: 15px; 
+    border-bottom: 1px solid #D0DBE5; 
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
@@ -530,8 +520,7 @@ body {
             border-color: #DDD;
             background: #fafafa;
         }
-/* nav tab link:hover */
-/* nav tab active link:focus:hover */
+
 .tab-block .tabs-left > li.active > a,
 .tab-block .tabs-left > li.active > a:hover,
 .tab-block .tabs-left > li.active > a:focus {
@@ -562,8 +551,7 @@ body {
             border-color: #DDD;
             background: #fafafa;
         }
-/* nav tab link:hover */
-/* nav tab active link:focus:hover */
+
 .tab-block .tabs-right > li.active > a,
 .tab-block .tabs-right > li.active > a:hover,
 .tab-block .tabs-right > li.active > a:focus {
@@ -574,6 +562,7 @@ body {
     z-index: 12;
     background: #FFF;
 }
+
 /*===============================================
   Tab Navigation - Tabs Right
 ================================================= */
@@ -596,8 +585,7 @@ body {
             border: 1px solid #DDD;
             background: #fafafa;
         }
-/* nav tab link:hover */
-/* nav tab active link:focus:hover */
+
 .tab-block .tabs-below > li.active > a,
 .tab-block .tabs-below > li.active > a:hover,
 .tab-block .tabs-below > li.active > a:focus {
@@ -623,7 +611,7 @@ body {
 /* Improved UI Styling */
 @media (min-width: 768px) {
     .media-body {
-        width: 70%; /* Adjust as needed */
+        width: 70%; 
     }
 
     .additional-content {

@@ -5,7 +5,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children, initialToken }) => {
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [isLoading, setLoading] = useState(true);
-    const [isLoggedOut, setLoggedOut] = useState(false); // Add isLoggedOut state
+    const [isLoggedOut, setLoggedOut] = useState(false); 
     const isMounted = useRef(true);
     const [userInfo, setUserInfo] = useState();
 
@@ -22,7 +22,7 @@ export const AuthProvider = ({ children, initialToken }) => {
                 if (response.ok) {
                     const data = await response.json();
                     setLoggedIn(data.isLoggedIn);
-                    setUserInfo(data); // Set the entire user info object
+                    setUserInfo(data); 
                 } else {
                     console.error(`Error fetching authentication status. Status: ${response.status}, Message: ${response.statusText}`);
                     throw new Error('Authentication failed');
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children, initialToken }) => {
     }, [initialToken, isLoggedOut]);
 
     if (isLoading) {
-        // You can render a loading indicator here if needed
+        // render a loading indicator
         return <div>Loading...</div>;
     }
 
@@ -64,9 +64,9 @@ export const AuthProvider = ({ children, initialToken }) => {
 export const useAuth = () => {
     const context = useContext(AuthContext);
 
-    // Function to retrieve the authenticated user
+    // retrieve the authenticated user
     const getAuthenticatedUser = async () => {
-        // If userInfo is not available, fetch it from the backend
+        // If userInfo is not available, fetch it from the backend by calling check-auth get request
         if (!context.userInfo) {
             try {
                 const response = await fetch('http://localhost:5194/api/check-auth', {
