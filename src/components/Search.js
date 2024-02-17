@@ -55,26 +55,6 @@ function Search() {
 
     const modelPath = process.env.PUBLIC_URL + '/model/model.json';
 
-    const applyUserFilters = (course) => {
-        // Example User Filter Logic
-        // Filter courses based on selected subjects
-        if (selectedSubjects.length > 0 && !selectedSubjects.every((interest) => course.subject.includes(interest))) {
-            return false;
-        }
-
-        // Add more user filter conditions as needed
-        // ...
-
-        return true;
-    };
-
-    const applyModelFilters = (course) => {
-        // Example Model Filter Logic
-        // Placeholder logic, modify based on your model's predictions
-        // Return true if the course passes the model's filters, false otherwise
-        return Math.random() > 0.5; // Placeholder condition
-    };
-
     const handleExploreClick = (course) => {
         console.log(`Explore clicked for ${course}`);
 
@@ -123,20 +103,6 @@ function Search() {
 
         // Clear any previous error messages
         setErrors({});
-
-        // Perform filtering based on selected filters and model predictions
-        const filteredCourses = courses.filter((course) => {
-            // Apply filter conditions based on user input
-            const passesUserFilters = applyUserFilters(course);
-
-            // Apply filter conditions based on model predictions
-            const passesModelFilters = applyModelFilters(course);
-
-            // Combine user and model filter results
-            const passesAllFilters = passesUserFilters && passesModelFilters;
-
-            return passesAllFilters;
-        });
 
         // Check for empty fields
         const newErrors = {
@@ -226,35 +192,6 @@ function Search() {
             resetForm();
         }
     };
-
-    // Perform filtering based on various filters
-    const filteredCourses = courses.filter((course) => {
-        if (level && course.level !== level) {
-            return false;
-        }
-        if (subject.length > 0 && !subject.every((interest) => course.subject.includes(interest))) {
-            return false;
-        }
-        if (location && course.location !== location) {
-            return false;
-        }
-        if (language.length > 0 && !language.includes(course.language)) {
-            return false;
-        }
-        if (duration && course.duration !== duration) {
-            return false;
-        }
-        if (priceRange && (course.price < 10 || course.price > 100)) {
-            return false;
-        }
-        if (certification && !course.certification) {
-            return false;
-        }
-        if (rating && course.rating < parseFloat(rating)) {
-            return false;
-        }
-        return true;
-    });
 
     const handleLocationTypeChange = (e) => {
         setSelectedLocationType(e.target.value);
@@ -350,12 +287,12 @@ function Search() {
         return tokenDictionary[token] || 0; // Return 0 if token not found in the dictionary
     };
 
+    // User inputs need to be preprocessed in the same way as when you trained your model. This usually involves tokenizing the text and converting it into a numerical format that the model can understand
     const preprocessUserInput = (inputText) => {
-        // Implement your preprocessing logic here
-        // Example: Tokenization
+        // Tokenization
         const tokens = inputText.split(' ');
 
-        // Convert tokens to a numeric tensor (example)
+        // Convert tokens to a numeric tensor 
         const inputTensor = tf.tensor2d([tokens.map(tokenToNumericValue)]);
 
         return inputTensor;
@@ -403,7 +340,7 @@ function Search() {
                 const predictedData = prediction.predictions || [];
                 setPredictedCourses(predictedData.$values);
 
-                console.log('Prediction:', predictedData);
+                console.log('Predictions:', predictedData);
 
                 // Call handlePredictedData only once after setting the state
                 if (predictedData.length > 0) {
@@ -465,15 +402,17 @@ function Search() {
         useEffect(() => {
             async function loadRNNModel() {
                 try {
-                    const loadedModel = await loadModel();
-                    setRNNModel(loadedModel);
+                    // Ensure modelPath is correct and accessible
+                    const model = await tf.loadLayersModel(modelPath);
+                    setRNNModel(model);
+                    console.log("Model loaded successfully");
                 } catch (error) {
                     console.error('Error loading RNN model:', error);
                 }
             }
 
             loadRNNModel();
-        }, []);
+        }, []); // Empty dependency array means this effect runs once on mount
 
     return (
             <div>

@@ -1,66 +1,105 @@
+//  training an RNN model with TensorFlow.js. Includes data preprocessing, model construction, training, and saving the trained model to a json file.
+
 const tf = require('@tensorflow/tfjs-node');
 const fs = require('fs');
 
-// Example data (replace with your dataset)
+// course data
 const data = [
     {
         input: 'Beginner WebDevelopment Asynchronous English Long-Term OnSale 193-986 WithCertification Rating3.9',
-        label: 1, // Use numerical labels, e.g., 0 and 1
+        label: 1, 
     },
-    // Add more examples as needed
+    {
+        input: 'Intermediate Physics Asynchronous English Short-Term OnSale 170-286 WithCertification Rating4.9',
+        label: 2,
+    },
+    {
+        input: 'Advanced Mathematics Asynchronous English 3months null 91-99 WithCertification Rating2.5',
+        label: 3,
+    },
+    {
+        input: 'Intermediate History Asynchronous English 6months null 50-60 WithCertification Rating4.9',
+        label: 4,
+    },
+    {
+        input: 'Beginner Psychology Asynchronous English Long-Term OnSale 65-100 WithCertification Rating2.9',
+        label: 5,
+    },
+    {
+        input: 'Advanced WebDevelopment Asynchronous English Short-Term OnSale 250-280 WithCertification Rating1.5',
+        label: 6,
+    },
 ];
 
-const tokenToNumericValue = (token) => {
-    const tokenDictionary = {
-        'Beginner': 1,
-        'WebDevelopment': 2,
-        'Asynchronous': 3,
-        'Synchronous': 4,
-        'English': 5,
-        'Long-Term': 6,
-        'OnSale': 7,
-        '193-986': 8,
-        'WithCertification': 9,
-        'Rating3.9': 10,
-        // Add more tokens as needed
-    };
-    return tokenDictionary[token] || 0;
+// Tokenize and encode the inputs
+let tokenizer = {
+    wordIndex: {},
+    index: 1,
 };
 
-const preprocessData = (data) => {
-    return data.map(entry => ({
-        input: entry.input.split(' ').map(tokenToNumericValue),
-        label: entry.label,
-    }));
-};
+function tokenize(text) {
+    return text.toLowerCase().split(/\s+/);
+}
 
-const processedData = preprocessData(data);
+function encode(tokens) {
+    return tokens.map(token => {
+        if (!tokenizer.wordIndex[token]) {
+            tokenizer.wordIndex[token] = tokenizer.index++;
+        }
+        return tokenizer.wordIndex[token];
+    });
+}
 
-const inputSize = processedData[0].input.length;
-const outputSize = 2; // Modify based on your specific output size (number of classes)
+const sequences = data.map(item => encode(tokenize(item.input)));
+const labels = data.map(item => item.label);
+
+// Determine max sequence length for padding
+const maxSeqLength = sequences.reduce((prev, curr) => (curr.length > prev ? curr.length : prev), 0);
+
+// Pad sequences
+const paddedSequences = sequences.map(seq => {
+    while (seq.length < maxSeqLength) {
+        seq.push(0);
+    }
+    return seq;
+});
+
+// Prepare tensors
+const xs = tf.tensor2d(paddedSequences);
+const ys = tf.oneHot(tf.tensor1d(labels, 'int32'), 2); // Adjust the '2' based on the number of categories
 
 // Define the model
 const model = tf.sequential();
-model.add(tf.layers.simpleRNN({ units: 64, activation: 'relu', inputShape: [inputSize] }));
-model.add(tf.layers.dense({ units: outputSize, activation: 'sigmoid' })); // Use 'sigmoid' for binary classification
+model.add(tf.layers.embedding({
+    inputDim: tokenizer.index, // Size of the vocabulary
+    outputDim: 50, // Dimension of the dense embedding
+    inputLength: maxSeqLength // Length of input sequences
+}));
+model.add(tf.layers.simpleRNN({
+    units: 64,
+    returnSequences: false
+}));
+model.add(tf.layers.dense({
+    units: 2, // Adjust based on the number of categories
+    activation: 'softmax'
+}));
 
 // Compile the model
 model.compile({
     optimizer: 'adam',
-    loss: 'binaryCrossentropy', // Use 'binaryCrossentropy' for binary classification
-    metrics: ['accuracy'],
+    loss: 'categoricalCrossentropy',
+    metrics: ['accuracy']
 });
 
-// Convert data to tensors
-const xs = tf.tensor2d(processedData.map(entry => entry.input));
-const ys = tf.oneHot(processedData.map(entry => entry.label), outputSize); // Use numerical labels
-
 // Train the model
-model.fit(xs, ys, { epochs: 10 })
-    .then(info => {
-        console.log('Model training complete:', info);
+async function train() {
+    await model.fit(xs, ys, {
+        epochs: 10,
+        callbacks: tf.callbacks.earlyStopping({ patience: 2 })
+    });
 
-        // Save the model architecture and weights
-        model.save('file://public/model/model.json');
-    })
-    .catch(error => console.error('Error during training:', error));
+    // Save the model
+    await model.save('file://./model');
+}
+
+train().then(() => console.log('Training complete')).catch(err => console.error(err));
